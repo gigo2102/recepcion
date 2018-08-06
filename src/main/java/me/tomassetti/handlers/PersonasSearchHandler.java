@@ -8,18 +8,17 @@ import spark.template.freemarker.FreeMarkerEngine;
 import java.util.Map;
 import java.util.UUID;
 
-public class AreasSearchHandler extends AbstractRequestHandler<EmptyPayload> {
+public class PersonasSearchHandler extends AbstractRequestHandler<EmptyPayload> {
 
     private Model model;
 
-    public AreasSearchHandler(Model model, FreeMarkerEngine freeMarkerEngine) {
+    public PersonasSearchHandler(Model model, FreeMarkerEngine freeMarkerEngine) {
         super(EmptyPayload.class, model, freeMarkerEngine);
         this.model = model;
     }
 
     @Override
     protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
-    	String nombre = urlParams.get("nombre");
-        return view("areas_listado.ftl", model.areasList(nombre));
+        return view("personas_listado.ftl", model.personasList());
     }
 }

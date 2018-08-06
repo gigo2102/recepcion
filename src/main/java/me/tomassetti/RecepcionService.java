@@ -75,6 +75,51 @@ public class RecepcionService
             }
         });
 
+        
+      //configuramos las rutas de USUARIOS
+        //listado
+        get("/usuarios", new UsuarioSearchHandler (sql2o_model, freeMarkerEngine));
+        
+        //crear
+        get("/usuarios/create_form", new UsuarioCreateGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/usuarios", new UsuarioCreateHandler(sql2o_model, freeMarkerEngine));
+     
+
+        //configuramos las rutas de PERSONA
+        //listado
+         get("/personas", new PersonasSearchHandler (sql2o_model, freeMarkerEngine));
+     
+        //crear
+        get("/personas/create_form", new PersonaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/personas", new PersonasCreateHandler(sql2o_model, freeMarkerEngine));
+        
+        
+        //configuramos las rutas de TIPOS DE VISITAS
+        //listado
+        get("/tipovisitas", new TipoVisitasSearchHandler (sql2o_model, freeMarkerEngine));
+     
+        //crear
+        get("/tipovisitas/create_form", new TipoVisitaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/tipovisitas", new TipoVisitaCreateHandler(sql2o_model, freeMarkerEngine));
+        
+        get("/tipovisitas/:uuid/edit_form", new TipoVisitaEditGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/tipovisitas/:uuid/", new TipoVisitaEditHandler(sql2o_model, freeMarkerEngine)); 
+        
+        
+        
+        //eliminar
+       get("/tipovisitas/:uuid/delete", new TipoVisitasDeleteHandler(sql2o_model, freeMarkerEngine));
+        
+       //configuramos las rutas de TIPO DE DOCUMENTO
+       //listado
+        get("/tipodocumentos", new TipoDocumentosSearchHandler(sql2o_model, freeMarkerEngine));
+    
+       //crear
+       get("/tipodocumentos/create_form", new TipoDocumentoCreateGetFormHandler(sql2o_model, freeMarkerEngine));
+       post("/tipodocumentos", new TipoDocumentoCreateHandler(sql2o_model, freeMarkerEngine));
+       
+       get("/tipodocumentos/:uuid/edit_form", new TipoDocumentoEditGetFormHandler(sql2o_model, freeMarkerEngine));
+       post("/tipodocumentos/:uuid/", new TipoDocumentoEditHandler(sql2o_model, freeMarkerEngine));
     
         //configuramos las rutas de AREAS
         //listado
@@ -111,17 +156,9 @@ public class RecepcionService
         post("/motivos/:uuid/", new MotivoEditHandler(sql2o_model, freeMarkerEngine)); //AreaUpdatePayload
         
 
-        //crear
-        get("/visitas/create_form", new VisitaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
-        post("/visitas", new VisitaCreateHandler(sql2o_model, freeMarkerEngine));
         
-		
-    
-    
-    
-    
-    
-    
-    }
+        
+        
+         }
 
 }

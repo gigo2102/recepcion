@@ -27,7 +27,7 @@ public class MotivoEditGetFormHandler extends AbstractRequestHandler<EditMotivoP
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	Motivo elMotivo = model.motivosGetById(uuid);
 
-    	List<Area> areasList = sql2o_model.areasList();
+    	List<Area> areasList = sql2o_model.areasList(null);
     	EditMotivoPayload viewModel = new EditMotivoPayload(areasList);
     	viewModel.setUuid(elMotivo.getUuid());
     	viewModel.setNombre(elMotivo.getNombre());

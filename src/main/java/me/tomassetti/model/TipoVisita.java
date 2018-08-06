@@ -1,10 +1,11 @@
 package me.tomassetti.model;
 
 import lombok.Data;
+import java.util.List;
 import java.util.UUID;
 
 @Data
-public class TipoDocumento {
+public class TipoVisita {
     private UUID uuid;
     private String nombre;
     
@@ -16,13 +17,11 @@ public class TipoDocumento {
 		this.uuid = uuid;
 	}
 	
-	public String getnombre() {
+	public String getNombre() {
 		return nombre;
 	}
 	
-	public void setnombre(String nombre) {
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
 }

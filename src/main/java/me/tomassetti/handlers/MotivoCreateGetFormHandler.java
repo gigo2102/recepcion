@@ -22,7 +22,7 @@ public class MotivoCreateGetFormHandler extends AbstractRequestHandler<NewMotivo
 
     @Override
     protected Answer processImpl(NewMotivoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
-    	List<Area> areasList = sql2o_model.areasList();
+    	List<Area> areasList = sql2o_model.areasList(null);
     	NewMotivoPayload viewModel = new NewMotivoPayload(areasList);
     	return view("motivos_create.ftl", viewModel);
     }

@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -92,7 +93,11 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
         		}
     			value = objectMapper.readValue(auxBody, valueClass);
             }
-            Map<String, String> urlParams = request.params();
+            Map<String, String> urlParams = new HashMap<String, String>();
+            for (Entry<String, String[]> elem : request.queryMap().toMap().entrySet()) {
+				urlParams.put(elem.getKey(), elem.getValue()[0]);
+			}
+            urlParams.putAll(request.params());
             Answer answer = process(value, urlParams, shouldReturnHtml(request));
             response.status(answer.getCode());
             if (answer.getCode() == 303) {

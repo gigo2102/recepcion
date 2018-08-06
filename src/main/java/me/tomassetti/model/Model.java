@@ -6,9 +6,12 @@ import java.util.UUID;
 
 import me.tomassetti.handlers.EditAreaPayload;
 import me.tomassetti.handlers.EditMotivoPayload;
+import me.tomassetti.handlers.EditTipoDocumentoPayload;
+import me.tomassetti.handlers.EditTipoVisitaPayload;
 import me.tomassetti.handlers.EmptyPayload;
 import me.tomassetti.handlers.NewAreaPayload;
-import me.tomassetti.handlers.NewVisitaPayload;
+import me.tomassetti.handlers.NewTipoDocumentoPayload;
+
 
 public interface Model {
    /* UUID createPost(String title, String content, List<String> categories);
@@ -24,13 +27,15 @@ public interface Model {
 
     void areaDelete(UUID uuid);
     
-	List<Area> areasList();
+	List<Area> areasList(String nombre);
 	
 	void areasCreate(Area area);
 	
 	boolean areasExisteNombre(String nombre);
 	
     void updateArea(Area area);
+    
+    void updateTipoVisita(TipoVisita tipovisita);
 
 	Area areasGetById(UUID uuid);
     
@@ -43,6 +48,38 @@ public interface Model {
 	void updateMotivo(Motivo motivo);
 
 	Motivo motivosGetById(UUID uuid);
+	
+	List<Persona> personasList();
 
-//	void visitasCreate(NewVisitaPayload value);
+	void personasCreate(Persona persona);
+
+	void tipovisitasCreate(TipoVisita tipovisita);
+
+	List<TipoVisita> tipovisitaList();
+
+    List<TipoDocumento> tipodocumentosList(String nombre);
+
+	TipoVisita tipovisitasGetById(UUID uuid);
+
+	TipoDocumento tipodocumentoGetById(UUID tipoDocumentoId);
+
+	void tipodocumentoCreate(TipoDocumento tipodocumento);
+
+	void tipovisitasDelete(UUID uuid);
+
+	Object usuariosList(String nombre);
+
+	void usuariosCreate(Usuario usuario);
+	
+	void updateTipoDocumento(TipoDocumento tipodocumento);
+
+	
+
+	
+
+
+	
+
+
+
 }

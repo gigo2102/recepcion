@@ -1,5 +1,13 @@
 <h2>Listado de Areas</h2>
 
+<form method="get" action="/areas" role="form">
+	<div class="form-group">
+		<label for="nombre">Area a buscar</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresar area a buscar..." value="" />
+	</div>
+	<input class="btn btn-primary" type="submit" value="Buscar" />
+</form>
+
 <table class="table table-striped">
 	<tr>
 		<th>Nombre </th>
