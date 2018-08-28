@@ -3,20 +3,21 @@
 <table class="table table-striped">
 	<tr>
 		<th>Nombre</th>
-		<th>correo</th>
-		<th>pass</th>
+		<th>Correo</th>
+		<th>Contraseña</th>
 		<th>Area</th>
 		<th>Acciones</th>
 	</tr>
 	<#list model as unUsuario>
 		<tr>
+		   <td> ${unUsuario.area.nombre}</td> 
         	<td> ${unUsuario.nombre}</td>
-        	<td> ${unUsuario.pass}</td>
         	<td> ${unUsuario.correo}</td>
-        	<td> ${unUsuario.areaid.nombre}</td> 
+        	<td> ${unUsuario.pass}</td>
+        	
 	        <td> 
-	         <a class="info" " href=" ">Editar</a>
-	            <a class="info" onclick="return confirm('Esta seguro que desea borrar el Motivo?')";  href=" ">Borrar</a>
+	        <a class="info" " href="/usuarios/${unUsuario.uuid}/edit_form">Editar</a>
+	            <a class="info" onclick="return confirm('Esta seguro que desea borrar este usuario?')";  href="/usuarios/${unUsuario.uuid}/delete">Borrar</a>
  
 	        </td>
 	    </tr>

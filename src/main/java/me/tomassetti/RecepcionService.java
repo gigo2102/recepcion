@@ -74,6 +74,10 @@ public class RecepcionService
                 return "ok";
             }
         });
+        
+        //crear VISITA
+        get("/visitas/create_form", new VisitaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/visitas", new VisitaCreateHandler(sql2o_model, freeMarkerEngine));
 
         
       //configuramos las rutas de USUARIOS
@@ -83,6 +87,12 @@ public class RecepcionService
         //crear
         get("/usuarios/create_form", new UsuarioCreateGetFormHandler(sql2o_model, freeMarkerEngine));
         post("/usuarios", new UsuarioCreateHandler(sql2o_model, freeMarkerEngine));
+        
+        get("/usuarios/:uuid/edit_form", new UsuarioEditGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/usuarios/:uuid/", new UsuarioEditHandler(sql2o_model, freeMarkerEngine));
+        
+        //eliminar
+        get("/usuarios/:uuid/delete", new UsuariosDeleteHandler(sql2o_model, freeMarkerEngine));
      
 
         //configuramos las rutas de PERSONA
@@ -93,6 +103,16 @@ public class RecepcionService
         get("/personas/create_form", new PersonaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
         post("/personas", new PersonasCreateHandler(sql2o_model, freeMarkerEngine));
         
+        get("/personas/:uuid/edit_form", new PersonaEditGetFormHandler(sql2o_model, freeMarkerEngine));
+        post("/personas/:uuid/", new PersonaEditHandler(sql2o_model, freeMarkerEngine)); 
+        
+        
+        //eliminar
+       get("/personas/:uuid/delete", new PersonasDeleteHandler(sql2o_model, freeMarkerEngine));
+               
+       //buscar
+       get("/personas/search", new PersonasSearchHandler(sql2o_model, freeMarkerEngine));
+       
         
         //configuramos las rutas de TIPOS DE VISITAS
         //listado
@@ -120,6 +140,8 @@ public class RecepcionService
        
        get("/tipodocumentos/:uuid/edit_form", new TipoDocumentoEditGetFormHandler(sql2o_model, freeMarkerEngine));
        post("/tipodocumentos/:uuid/", new TipoDocumentoEditHandler(sql2o_model, freeMarkerEngine));
+       
+       get("/tipodocumentos/:uuid/delete", new TipoDocumentoDeleteHandler(sql2o_model, freeMarkerEngine));
     
         //configuramos las rutas de AREAS
         //listado

@@ -11,7 +11,7 @@
         	<td> ${unTipoDocumento.nombre}</td> 
 	        <td> 
 	         <a class="info" " href="/tipodocumentos/${unTipoDocumento.uuid}/edit_form">Editar</a>
-	            <a class="info" onclick="return confirm('Esta seguro que desea borrar el tipo de documento?')";  href=" ">Borrar</a>
+	            <a class="info" onclick="return confirm('Esta seguro que desea borrar el tipo de documento?')";  href="/tipodocumentos/${unTipoDocumento.uuid}/delete">Borrar</a>
 	        </td>
 	    </tr>
 	</#list>

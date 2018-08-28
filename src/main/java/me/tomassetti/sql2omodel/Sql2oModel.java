@@ -44,8 +44,8 @@ public class Sql2oModel implements Model {
     @Override
     public void updateTipoDocumento(TipoDocumento tipodocumento) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("update tipodocumentos set nombre=:nombre where uuid=:tipodocumentos_uuid")
-                    .addParameter("tipodocumento_uuid", tipodocumento.getUuid())
+            conn.createQuery("update tipodocumentos set nombre=:nombre where uuid=:tipodocumentoid")
+                    .addParameter("tipodocumentoid", tipodocumento.getUuid())
                     .addParameter("nombre", tipodocumento.getnombre())
                     .executeUpdate();
         }
@@ -72,6 +72,34 @@ public class Sql2oModel implements Model {
                     .executeUpdate();
         }
     }
+    
+    @Override
+    public void updateUsuario(Usuario usuario) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("update usuarios set nombre=:nombre,correo=:correo , pass=:pass, areaid=:areaid  where uuid=:usuario_uuid")
+                    .addParameter("usuario_uuid", usuario.getUuid())
+                    .addParameter("nombre", usuario.getNombre())
+                    .addParameter("correo", usuario.getCorreo())
+                    .addParameter("pass", usuario.getPass())
+                    .addParameter("areaid", usuario.getArea().getUuid())
+                    .executeUpdate();
+        }
+    }
+    
+    @Override
+    public void updatePersona(Persona persona) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("update personas set nombre=:nombre,apellido=:apellido ,telefono=:telefono ,correo=:correo,valordocumento=:valordocumento, tipodocumentoid=:tipodocumentoid  where uuid=:persona_uuid")
+                    .addParameter("usuario_uuid", persona.getUuid())
+                    .addParameter("nombre", persona.getNombre())
+                    .addParameter("correo", persona.getCorreo())
+                    .addParameter("apellido", persona.getApellido())
+                    .addParameter("telefono", persona.getTelefono())
+                    .addParameter("valordocumento", persona.getValorDocumento())
+                    .addParameter("tipodocumentoid", persona.getTipoDocumento().getUuid())
+                    .executeUpdate();
+        }
+    }
 
 
 
@@ -87,14 +115,17 @@ public class Sql2oModel implements Model {
 	
 	
 	@Override
-	public List<Usuario> usuariosList(String nombre) {
-        try (Connection conn = sql2o.open()) {
-        	List<Usuario> usuarios = conn.createQuery("select * from usuarios where :nombre is null or lower(nombre) like '%' || lower(:nombre) || '%'")
-        			.addParameter("nombre", nombre)
-                    .executeAndFetch(Usuario.class);
-            return usuarios;
-        }
-	}
+	public List<Usuario> usuariosList() {
+	       try (Connection conn = sql2o.open()) {
+	        	List<Usuario> usuarios = conn.createQuery("select uuid,nombre,correo,pass  from usuarios")
+	                    .executeAndFetch(Usuario.class);
+	        	for(Usuario usuario : usuarios) {
+	        		mapAreaForUsuario(usuario, conn);
+	        	}
+	            return usuarios;
+	        }
+		}
+		
 	
 	
 	@Override
@@ -107,7 +138,6 @@ public class Sql2oModel implements Model {
 	}
 	
 
-	
 
 	@Override
 	public List<Motivo> motivosList() {
@@ -125,12 +155,24 @@ public class Sql2oModel implements Model {
 	@Override
 	public List<Persona> personasList() {
         try (Connection conn = sql2o.open()) {
-        	List<Persona> personas = conn.createQuery("select uuid,nombre  from personas")
+        	List<Persona> personas = conn.createQuery("select uuid,nombre,apellido,correo,telefono,valordocumento from personas")
                     .executeAndFetch(Persona.class);
         	for(Persona persona : personas) {
         		mapTipoDocumentoForPersona(persona, conn);
         	}
             return personas;
+        }
+	}
+	
+	@Override
+	public List<Visita> visitasList() {
+        try (Connection conn = sql2o.open()) {
+        	List<Visita> visitas = conn.createQuery("select uuid,persona,area,tipodocumento,valordocumento from personas")
+                    .executeAndFetch(Visita.class);
+        	for(Visita visita : visitas) {
+        		mapTipoDocumentoForPersona(visita, conn);
+        	}
+            return visitas;
         }
 	}
 	
@@ -142,6 +184,12 @@ public class Sql2oModel implements Model {
 		persona.setTipoDocumento(tipodocumento);
 	}
 	
+	private void mapAreaForUsuario(Usuario usuario, Connection conn) {
+		Area area = conn.createQuery("select * from areas where uuid=(select areaid from usuarios where uuid=:uuid)")
+				.addParameter("uuid", usuario.getUuid())
+				.executeAndFetch(Area.class).get(0);
+		usuario.setArea(area);
+	}
 
 	
 	private void mapAreaForMotivo(Motivo motivo, Connection conn) {
@@ -168,7 +216,7 @@ public class Sql2oModel implements Model {
         try (Connection conn = sql2o.open()) {
             UUID uuid = uuidGenerator.generate();
             usuario.setUuid(uuid);
-            conn.createQuery("insert into usuarios(uuid, nombre, correo , pass, areaid) VALUES (:uuid, :nombre ,:correo , :pass, :area_uuid)")
+            conn.createQuery("insert into usuarios(uuid, nombre, correo , pass, areaid) VALUES (:uuid, :nombre ,:correo , :pass, :areaid)")
                     .addParameter("uuid", uuid)
                     .addParameter("nombre", usuario.getNombre())
                     .addParameter("correo", usuario.getCorreo())
@@ -211,13 +259,33 @@ public class Sql2oModel implements Model {
         try (Connection conn = sql2o.open()) {
             UUID uuid = uuidGenerator.generate();
             persona.setUuid(uuid);
-            conn.createQuery("insert into personas(uuid, tipodocumentoid, nombre, apellido , correo , telefono) VALUES (:uuid, :tipodocumento_uuid ,:nombre , :apellido, :correo , :telefono")
+            conn.createQuery("insert into personas(uuid, tipodocumentoid, valordocumento, nombre, apellido , correo , telefono) VALUES (:uuid, :tipodocumentoid , :valordocumento ,:nombre , :apellido, :correo , :telefono)")
                     .addParameter("uuid", uuid)
-                    .addParameter("tipodocumento", persona.getTipoDocumento())
+                    .addParameter("tipodocumentoid", persona.getTipoDocumento().getUuid())
+                    .addParameter("valordocumento", persona.getValorDocumento())
                     .addParameter("nombre", persona.getNombre())
                     .addParameter("apellido", persona.getApellido())
                     .addParameter("correo", persona.getCorreo())
                     .addParameter("telefono", persona.getTelefono())
+                    .executeUpdate();
+        }
+	}
+	
+	
+	
+
+	@Override
+	public void visitasCreate(Visita visita) {
+        try (Connection conn = sql2o.open()) {
+            UUID uuid = uuidGenerator.generate();
+            visita.setUuid(uuid);
+            conn.createQuery("insert into personas(uuid, tipovisitaid, areaid, motivoid, personaid , observaciones) VALUES (:uuid, :tipovisitaid , :areaid ,:motivoid , :personaid, :observaciones )")
+                    .addParameter("uuid", uuid)
+                    .addParameter("tipovisitaid", visita.getTipovisita())
+                    .addParameter("areaid", visita.getArea())
+                    .addParameter("motivoid", visita.getMotivo())
+                    .addParameter("personaid", visita.getPersona())
+                    .addParameter("observaciones", visita.getObservaciones())
                     .executeUpdate();
         }
 	}
@@ -266,6 +334,33 @@ public class Sql2oModel implements Model {
 	}
 	
 	@Override
+	public void usuarioDelete(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("delete from usuarios where uuid=:usuario_uuid")
+                    .addParameter("usuario_uuid", uuid)
+                    .executeUpdate();
+        }
+	}
+	
+	@Override
+	public void personaDelete(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("delete from personas where uuid=:persona_uuid")
+                    .addParameter("persona_uuid", uuid)
+                    .executeUpdate();
+        }
+	}
+	
+	@Override
+	public void TipoDocumentoDelete(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("delete from tipodocumentos where uuid=:tipodocumento_uuid")
+                    .addParameter("tipodocumento_uuid", uuid)
+                    .executeUpdate();
+        }
+	}
+	
+	@Override
 	public void tipovisitasDelete(UUID uuid) {
         try (Connection conn = sql2o.open()) {
             conn.createQuery("delete from tipovisitas where uuid=:tipovisitas_uuid")
@@ -290,9 +385,23 @@ public class Sql2oModel implements Model {
 	}
 	
 	@Override
+	public TipoDocumento tipodocumentosGetById(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            List<TipoDocumento> tipodocumentos = conn.createQuery("select * from tipodocumentos where uuid=:tipodocumento_uuid")
+                    .addParameter("tipodocumento_uuid", uuid)
+                    .executeAndFetch(TipoDocumento.class);
+            if (tipodocumentos.size() == 1) {
+                return tipodocumentos.get(0);
+            } else {
+                throw new RuntimeException();
+            }
+        }
+	}
+	
+	@Override
 	public TipoDocumento tipodocumentoGetById(UUID uuid) {
         try (Connection conn = sql2o.open()) {
-            List<TipoDocumento> tipodocumentos = conn.createQuery("select * from tipodocumento where uuid=:tipodocumento_uuid")
+            List<TipoDocumento> tipodocumentos = conn.createQuery("select * from tipodocumentos where uuid=:tipodocumento_uuid")
                     .addParameter("tipodocumento_uuid", uuid)
                     .executeAndFetch(TipoDocumento.class);
             if (tipodocumentos.size() == 1) {
@@ -334,6 +443,38 @@ public class Sql2oModel implements Model {
             }
         }
 	}
+	
+	@Override
+	public Usuario usuariosGetById(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass from usuarios where uuid=:usuario_uuid")
+                    .addParameter("usuario_uuid", uuid)
+                    .executeAndFetch(Usuario.class);
+            if (usuarios.size() == 1) {
+        		Usuario usuario = usuarios.get(0);
+            	mapAreaForUsuario(usuario, conn);
+                return usuario;
+            } else {
+                throw new RuntimeException();
+            }
+        }
+	}
+	
+	@Override
+	public Persona personasGetById(UUID uuid) {
+        try (Connection conn = sql2o.open()) {
+            List<Persona> personas = conn.createQuery("select uuid,nombre,apellido, correo, telefono, valordocumento from personas where uuid=:personaid")
+                    .addParameter("personaid", uuid)
+                    .executeAndFetch(Persona.class);
+            if (personas.size() == 1) {
+        		Persona persona = personas.get(0);
+            	mapTipoDocumentoForPersona(persona, conn);
+                return persona;
+            } else {
+                throw new RuntimeException();
+            }
+        }
+	}
 
 	@Override
 	public List<TipoDocumento> tipodocumentosList(String nombre) {
@@ -344,7 +485,11 @@ public class Sql2oModel implements Model {
 		return tipodocumentos;
 	}
 	
-	}}
+	}
+
+	
+}
+	
 
 	/*
 	@Override

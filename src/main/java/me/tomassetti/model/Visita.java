@@ -52,17 +52,7 @@ public class Visita {
 	}
 
 	
-	/*private String TipoVisita;
 
-	private String Observaciones;
-	private Area area;
-	private Motivo motivo;
-	private Persona persona;
-	
-	
-	
-	
-*/
 
 
 }

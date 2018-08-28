@@ -10,6 +10,8 @@ import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Persona;
+import me.tomassetti.model.TipoDocumento;
+import me.tomassetti.model.TipoVisita;
 import me.tomassetti.model.Visita;
 
 @Data
@@ -17,19 +19,22 @@ public class NewVisitaPayload extends Visita implements Validable {
     private List<Area> areasList;
     private List<Motivo> motivosList;
     private List<Persona> personasList;
+    private List<TipoVisita> tipovisitasList;
     private UUID areaId;
     private UUID motivoId;
     private UUID personasId;
+    private UUID tipovisitasId;
 	
 
 
 	
 	
- public NewVisitaPayload(List<Area> areasList , List <Motivo> motivosList , List <Persona> personasList) {
+ public NewVisitaPayload(List<Area> areasList , List <Motivo> motivosList , List <Persona> personasList, List <TipoVisita> tipovisitasList) {
 		
 		this.setAreasList(areasList);
 		this.setMotivosList(motivosList);
 		this.setPersonasList(personasList);
+		this.setTipovisitasList(tipovisitasList);
 		
 	}
 	public NewVisitaPayload() {
@@ -37,6 +42,7 @@ public class NewVisitaPayload extends Visita implements Validable {
 		this.setAreasList(new ArrayList<Area> ());
 		this.setMotivosList(new ArrayList<Motivo> ());
 		this.setPersonasList(new ArrayList<Persona> ());
+		this.setTipovisitasList(new ArrayList<TipoVisita> ());
 		
 	}
 	
@@ -84,6 +90,18 @@ public class NewVisitaPayload extends Visita implements Validable {
 	
 	public UUID getPersonasId() {
 		return personasId;
+	}
+	public UUID getTipovisitasId() {
+		return tipovisitasId;
+	}
+	public void setTipovisitasId(UUID tipovisitasId) {
+		this.tipovisitasId = tipovisitasId;
+	}
+	public List<TipoVisita> getTipovisitasList() {
+		return tipovisitasList;
+	}
+	public void setTipovisitasList(List<TipoVisita> tipovisitasList) {
+		this.tipovisitasList = tipovisitasList;
 	}
 	
 	

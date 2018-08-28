@@ -1,4 +1,5 @@
 package me.tomassetti.handlers;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,19 +11,20 @@ import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Persona;
 import me.tomassetti.model.TipoDocumento;
+import me.tomassetti.model.Usuario;
 
 @Data
-public class NewPersonaPayload extends Persona implements Validable {
+public class EditPersonaPayload extends Persona implements Validable {
     private List<TipoDocumento> tipodocumentosList;
-    private UUID tipodocumentoId;
+    private UUID tipoDocumentoId;
 	
-	public NewPersonaPayload(List<TipoDocumento> tipodocumentosList) {
+	public EditPersonaPayload(List<TipoDocumento> tipodocumentosList) {
 		 
-		this.setTipoDocumentoList(tipodocumentosList);
+		this.setTipoDocumentosList(tipodocumentosList);
 	}
-	public NewPersonaPayload() {
+	public EditPersonaPayload() {
 		 
-		this.setTipoDocumentoList(new ArrayList<TipoDocumento> ());
+		this.setTipoDocumentosList(new ArrayList<TipoDocumento> ());
 	}
 
 	public Object[] validate(Model model) {
@@ -36,21 +38,15 @@ public class NewPersonaPayload extends Persona implements Validable {
         return errors.toArray();
     }
 	public List<TipoDocumento> getTipoDocumentosList() {
-		return getTipoDocumentosList();
-	}
-	public void setTipoDocumentoList(List<TipoDocumento> tipodocumentosList) {
-		this.setTipodocumentosList(tipodocumentosList);
-	}
-	public UUID getTipoDocumentoid() {
-		return tipodocumentoId;
-	}
-	public void setTipoDocumentoid(UUID tipodocumentosid) {
-		this.tipodocumentoId = tipodocumentosid;
-	}
-	public List<TipoDocumento> getTipodocumentosList() {
 		return tipodocumentosList;
 	}
-	public void setTipodocumentosList(List<TipoDocumento> tipodocumentosList) {
+	public void setTipoDocumentosList(List<TipoDocumento> tipodocumentosList) {
 		this.tipodocumentosList = tipodocumentosList;
+	}
+	public UUID getTipoDocumentoId() {
+		return tipoDocumentoId;
+	}
+	public void setTipoDocumentoId(UUID tipodocumentoId) {
+		this.tipoDocumentoId = tipodocumentoId;
 	}
 }

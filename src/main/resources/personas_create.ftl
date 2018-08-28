@@ -4,18 +4,20 @@
 
 <form method="post" action="/personas" role="form">
 
-    <div class="form-group has-button">
-        <label class="control-label" for="tipodocumentosid">Tipo de Documento</label>
-        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="tipodocumentoid">
+   <div class="form-group has-button">
+        <label class="control-label" for="tipoDocumentoid"> Tipo Documento</label>
+        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="tipoDocumentoid">
             <option value=""> ... </option>
             <#list model.tipodocumentosList as tipodocumento>
 				<option value="${tipodocumento.uuid}">${tipodocumento.nombre}</option>
 			</#list>
         </select>
     </div>
+
+ 
     <div class="form-group">
-		<label for="nombre">Numero Documento</label>
-        <input type="text" class="form-control" id="valordocumento" name="valordocumento" placeholder="Ingresar numero de documento..." value="${model.valordocumento!''}" />
+		<label for="valorDocumento">Numero Documento</label>
+        <input type="text" class="form-control" id="valorDocumento" name="valorDocumento" placeholder="Ingresar numero de documento..." value="${model.valordocumento!''}" />
 	</div>
 	
 	<div class="form-group">

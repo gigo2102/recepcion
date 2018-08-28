@@ -1,4 +1,4 @@
-<h2>Edicion de Tipo De documento</h2>
+<h2>Edicion de Tipo de documento</h2>
 
 <#include "show_errors.ftl">
 

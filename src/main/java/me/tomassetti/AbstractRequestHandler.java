@@ -57,8 +57,12 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
     protected Answer redirect(String location) {
         return new Answer(303, location);    	
     }
+    
+    protected Answer json(Object data) {
+        return new Answer(200, dataToJson(data));    	
+    }
 
-    public static String dataToJson(Object data) {
+    private static String dataToJson(Object data) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);

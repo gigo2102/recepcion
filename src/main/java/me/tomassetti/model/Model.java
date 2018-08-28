@@ -27,6 +27,10 @@ public interface Model {
 
     void areaDelete(UUID uuid);
     
+    void personaDelete(UUID uuid);
+    
+    void usuarioDelete(UUID uuid);
+    
 	List<Area> areasList(String nombre);
 	
 	void areasCreate(Area area);
@@ -40,12 +44,27 @@ public interface Model {
 	Area areasGetById(UUID uuid);
     
 	List<Motivo> motivosList();
+	
+	List<Usuario> usuariosList();
 
 	void motivosCreate(Motivo motivo);
+	
+	void visitasCreate(Visita visita);
 
 	void motivoDelete(UUID uuid);
 
 	void updateMotivo(Motivo motivo);
+	
+	void updateUsuario(Usuario usuario);
+	
+	void updatePersona(Persona persona);
+	
+    Usuario usuariosGetById(UUID uuid);
+    
+    Persona personasGetById(UUID uuid);
+   
+    
+    TipoDocumento tipodocumentosGetById(UUID uuid);
 
 	Motivo motivosGetById(UUID uuid);
 	
@@ -61,17 +80,18 @@ public interface Model {
 
 	TipoVisita tipovisitasGetById(UUID uuid);
 
-	TipoDocumento tipodocumentoGetById(UUID tipoDocumentoId);
+	TipoDocumento tipodocumentoGetById(UUID uuid);
 
 	void tipodocumentoCreate(TipoDocumento tipodocumento);
 
 	void tipovisitasDelete(UUID uuid);
 
-	Object usuariosList(String nombre);
-
-	void usuariosCreate(Usuario usuario);
+    void usuariosCreate(Usuario usuario);
 	
 	void updateTipoDocumento(TipoDocumento tipodocumento);
+
+	void TipoDocumentoDelete(UUID uuid);
+
 
 	
 

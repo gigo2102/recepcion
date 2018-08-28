@@ -29,9 +29,15 @@ public class PersonasCreateHandler extends AbstractRequestHandler<NewPersonaPayl
 		}
     	
     	Persona persona = new Persona();
+    	TipoDocumento tipodocumento = sql2o_model.tipodocumentoGetById(value.getTipoDocumentoid());
+
     	persona.setNombre(value.getNombre());
-    	TipoDocumento tipodocumento = sql2o_model.tipodocumentoGetById(value.getTipoDocumentosid());
     	persona.setTipoDocumento(tipodocumento);
+		persona.setCorreo(value.getCorreo());
+		persona.setTelefono(value.getTelefono());
+		persona.setApellido(value.getApellido());
+		persona.setValorDocumento(value.getValorDocumento());
+
 		sql2o_model.personasCreate(persona);
 		
 		return redirect("/personas");

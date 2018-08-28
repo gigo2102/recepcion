@@ -19,7 +19,6 @@ public class UsuarioSearchHandler extends AbstractRequestHandler<EmptyPayload> {
 
     @Override
     protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
-    	String nombre = urlParams.get("nombre");
-        return view("usuario_listado.ftl", model.usuariosList(nombre));
+        return view("usuario_listado.ftl", model.usuariosList());
     }
 }

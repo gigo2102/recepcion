@@ -29,6 +29,8 @@ public class UsuarioCreateHandler extends AbstractRequestHandler<NewUsuarioPaylo
     	
     	Usuario usuario = new Usuario();
     	usuario.setNombre(value.getNombre());
+    	usuario.setCorreo(value.getCorreo());
+    	usuario.setPass(value.getPass());
     	Area area = sql2o_model.areasGetById(value.getAreaid());
     	usuario.setArea(area);
 		sql2o_model.usuariosCreate(usuario);

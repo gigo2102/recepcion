@@ -5,7 +5,7 @@ import java.util.UUID;
 public class Persona {
     private UUID uuid;
     private String valorDocumento;
-    private TipoDocumento tipoDocumento; 
+    private TipoDocumento tipodocumento; 
     private String nombre;
 	private String apellido;
 	private String correo;
@@ -19,20 +19,18 @@ public class Persona {
 		this.uuid = uuid;
 	}
     
-	private String getValorDocumento() {
-		return valorDocumento;
-	}
+	
 	
 	public void setNumero(String valorDocumento) {
-		this.valorDocumento = valorDocumento;
+		this.setValorDocumento(valorDocumento);
 	}
 	
 	public TipoDocumento getTipoDocumento() {
-		return tipoDocumento;
+		return tipodocumento;
 	}
 	
 	public void setTipoDocumento(TipoDocumento tipoDocumento){
-		this.tipoDocumento = tipoDocumento; 
+		this.tipodocumento = tipoDocumento; 
 	}
 
 	public String getNombre() {
@@ -65,6 +63,14 @@ public class Persona {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String getValorDocumento() {
+		return valorDocumento;
+	}
+
+	public void setValorDocumento(String valorDocumento) {
+		this.valorDocumento = valorDocumento;
 	}
 
 	
