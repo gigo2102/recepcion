@@ -14,7 +14,7 @@ import me.tomassetti.model.TipoDocumento;
 @Data
 public class NewPersonaPayload extends Persona implements Validable {
     private List<TipoDocumento> tipodocumentosList;
-    private UUID tipodocumentoId;
+    private UUID tipoDocumentoId;
 	
 	public NewPersonaPayload(List<TipoDocumento> tipodocumentosList) {
 		 
@@ -31,7 +31,7 @@ public class NewPersonaPayload extends Persona implements Validable {
     		errors.add("Complete el nombre!");
     	}
     	
-    	if(getTipoDocumento() == null ) {
+    	if(getTipoDocumentoId() == null ) {
     		errors.add("Complete el tipo de documento!");
     	}
     	
@@ -59,11 +59,11 @@ public class NewPersonaPayload extends Persona implements Validable {
 	public void setTipoDocumentoList(List<TipoDocumento> tipodocumentosList) {
 		this.setTipodocumentosList(tipodocumentosList);
 	}
-	public UUID getTipoDocumentoid() {
-		return tipodocumentoId;
+	public UUID getTipoDocumentoId() {
+		return tipoDocumentoId;
 	}
-	public void setTipoDocumentoid(UUID tipodocumentosid) {
-		this.tipodocumentoId = tipodocumentosid;
+	public void setTipoDocumentoId(UUID tipodocumentosid) {
+		this.tipoDocumentoId = tipodocumentosid;
 	}
 	public List<TipoDocumento> getTipodocumentosList() {
 		return tipodocumentosList;

@@ -2,11 +2,15 @@ package me.tomassetti.handlers;
 
 import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
+import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
+import me.tomassetti.model.Motivo;
+import me.tomassetti.model.TipoVisita;
 import me.tomassetti.model.Visita;
 import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +27,15 @@ public class VisitaCreateHandler extends AbstractRequestHandler<NewVisitaPayload
     protected Answer processImpl(NewVisitaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
 		Object[] errors = value.validate(sql2o_model);
     	if (errors.length > 0) {
-			return view("visitas_create.ftl", value, errors);
+        	List<Area> areasList = sql2o_model.areasList(null);
+        	List<Motivo>  motivosList = sql2o_model.motivosList();
+        	List<TipoVisita> tipovisitasList = sql2o_model.tipovisitaList();
+        	
+        	value.setAreasList(areasList);
+        	value.setMotivosList(motivosList);
+        	value.setTipovisitasList(tipovisitasList);
+
+    		return view("visita_create.ftl", value, errors);
 		}
     	
     	Visita v = new Visita();

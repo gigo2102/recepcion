@@ -47,19 +47,20 @@ public class NewVisitaPayload extends Visita implements Validable {
 		
 	}
 	
-	   public Object[] validate(Model model) {
-		   
+	public Object[] validate(Model model) {   
     	ArrayList<String> errors = new ArrayList<String>();
-  if(getTipovisita() == null || getTipovisita().getNombre().isEmpty()) {
-    	errors.add("Complete el tipo de visita");
+    	
+    	if(getTipovisitaId() == null) {
+    		errors.add("Complete el tipo de visita");
     	}
     	
-    	if(getArea() == null || getArea().getNombre().isEmpty()) {
-		errors.add("Complete el area");
-	}
+    	if(getAreaId() == null) {
+    		errors.add("Complete el area");
+    	}
     	
     	return errors.toArray();
     }
+	
 	public List<Area> getAreasList() {
 		return areasList;
 	}

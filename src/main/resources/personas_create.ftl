@@ -6,10 +6,10 @@
 
    <div class="form-group has-button">
         <label class="control-label" for="tipoDocumentoid"> Tipo Documento</label>
-        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="tipoDocumentoid">
+        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="tipoDocumentoId">
             <option value=""> ... </option>
             <#list model.tipodocumentosList as tipodocumento>
-				<option value="${tipodocumento.uuid}">${tipodocumento.nombre}</option>
+				<option value="${tipodocumento.uuid}" <#if model.tipoDocumentoId?? && model.tipoDocumentoId == tipodocumento.uuid>selected</#if>>${tipodocumento.nombre}</option>
 			</#list>
         </select>
     </div>

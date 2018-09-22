@@ -10,15 +10,15 @@
         <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="tipovisitaId">
             <option value=""> ... </option>
             <#list model.tipovisitasList as tipovisita>
-				<option value="${tipovisita.uuid}">${tipovisita.nombre}</option>
+				<option value="${tipovisita.uuid}" <#if model.tipovisitaId?? && model.tipovisitaId == tipovisita.uuid>selected</#if>>${tipovisita.nombre}</option>
 			</#list>
         </select>
     </div>
     
 	<div class="form-group">
 		<label for="nombre">Persona a buscar</label>
-        <input type="text" id="nombre" name="nombre" />
-        <input type="hidden" id="personaId" name="personaId" />
+        <input type="text" id="nombre" name="nombre" value="${model.nombre!''}" />
+        <input type="hidden" id="personaId" name="personaId" value="${model.personaId!''}" />
 	</div>
 
 	<a class="btn btn-default" href="/personas/create_form" target="_blank">Agregar Persona</a>
@@ -28,7 +28,7 @@
         <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="areaId">
             <option value=""> ... </option>
             <#list model.areasList as area>
-				<option value="${area.uuid}">${area.nombre}</option>
+				<option value="${area.uuid}" <#if model.areaId?? && model.areaId == area.uuid>selected</#if>>${area.nombre}</option>
 			</#list>
         </select>
     </div> 
@@ -38,14 +38,14 @@
         <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="motivoId">
             <option value=""> ... </option>
             <#list model.motivosList as motivo>
-				<option value="${motivo.uuid}">${motivo.nombre}</option>
+				<option value="${motivo.uuid}" <#if model.motivoId?? && model.motivoId == motivo.uuid>selected</#if>>${motivo.nombre}</option>
 			</#list>
         </select>
     </div>
     
 	<div class="form-group">
 		<label for="nombre">Observaciones</label>
-        <input type="text" class="form-control" id="observaciones" name="observaciones" placeholder="Ingresar observacion..." value="${model.nombre!''}" />
+        <input type="text" class="form-control" id="observaciones" name="observaciones" placeholder="Ingresar observacion..." value="${model.observaciones!''}" />
 	</div>
 	 
 
@@ -74,28 +74,6 @@
 	    });
 	  } );
   </script>
-  
-   <script>
-	  $( function() {
- 
-  
-    var correo = document.querySelector("#correo").value;
-    
-    /* validar correo  */
- if(correo != "") {
- 
-        var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
- 
-        if(!regex.test(#correo)) {
- 
-            alert("Usar arroba.");
- 
-            return false;
- 
-        }
- 
-    }
-    </script>
-  
+
   
   

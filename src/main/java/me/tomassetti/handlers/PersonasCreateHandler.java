@@ -10,6 +10,7 @@ import me.tomassetti.model.TipoDocumento;
 import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,11 +27,13 @@ public class PersonasCreateHandler extends AbstractRequestHandler<NewPersonaPayl
     protected Answer processImpl(NewPersonaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
 		Object[] errors = value.validate(sql2o_model);
     	if (errors.length > 0) {
+        	List<TipoDocumento> tipodocumentosList = sql2o_model.tipodocumentosList(null);
+    		value.setTipoDocumentoList(tipodocumentosList);
 			return view("personas_create.ftl", value, errors);
 		}
     	
     	Persona persona = new Persona();
-    	TipoDocumento tipodocumento = sql2o_model.tipodocumentoGetById(value.getTipoDocumentoid());
+    	TipoDocumento tipodocumento = sql2o_model.tipodocumentoGetById(value.getTipoDocumentoId());
 
     	persona.setNombre(value.getNombre());
     	persona.setTipoDocumento(tipodocumento);
