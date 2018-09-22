@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.TipoVisita;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public class TipoVisitaCreateGetFormHandler extends AbstractRequestHandler<NewTi
     }
 
     @Override
-    protected Answer processImpl(NewTipoVisitaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewTipoVisitaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	return view("tipovisita_create.ftl", new TipoVisita());
     }
 }

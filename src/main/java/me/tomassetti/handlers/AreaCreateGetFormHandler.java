@@ -4,6 +4,7 @@ import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ public class AreaCreateGetFormHandler extends AbstractRequestHandler<NewAreaPayl
     }
 
     @Override
-    protected Answer processImpl(NewAreaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewAreaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	return view("areas_create.ftl", new Area());
     }
 }

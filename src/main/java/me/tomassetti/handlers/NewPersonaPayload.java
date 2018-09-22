@@ -30,8 +30,26 @@ public class NewPersonaPayload extends Persona implements Validable {
     	if(getNombre() == null || getNombre().isEmpty()) {
     		errors.add("Complete el nombre!");
     	}
-    	if(model.areasExisteNombre(getNombre())) {
-    		errors.add("Ya existe el mismo nombre!");
+    	
+    	if(getTipoDocumento() == null ) {
+    		errors.add("Complete el tipo de documento!");
+    	}
+    	
+    	if(getApellido() == null || getApellido().isEmpty()) {
+    		errors.add("Complete el apellido!");
+    	}
+    	
+    	if(getTelefono() == null || getTelefono().isEmpty()) {
+    		errors.add("Complete el telefono!");
+    	}
+    	
+    	if(getValorDocumento() == null || getValorDocumento().isEmpty()) {
+    		errors.add("Complete el valor de documento!");
+    	}
+    	
+    
+    	if(model.personaExisteDocumento(getValorDocumento())) {
+    		errors.add("Ya existe una persona con el mismo documento!");
     	}
         return errors.toArray();
     }

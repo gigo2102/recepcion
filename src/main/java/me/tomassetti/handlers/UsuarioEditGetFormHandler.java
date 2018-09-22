@@ -6,6 +6,7 @@ import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Usuario;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class UsuarioEditGetFormHandler extends AbstractRequestHandler<EditUsuari
     }
 
     @Override
-    protected Answer processImpl(EditUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	Usuario elUsuario = model.usuariosGetById(uuid);
 

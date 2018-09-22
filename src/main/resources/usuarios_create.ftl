@@ -29,3 +29,29 @@
 	<input class="btn btn-primary" type="submit" value="Crear" />
 	<a class="btn btn-default" href="/usuarios">Volver</a>
 </form>
+
+
+   <script>
+	  $( function() {
+ 
+  
+    var correo = document.querySelector("#correo").value;
+    
+    /* validar correo  */
+ if(correo != "") {
+ 
+        var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+ 
+        if(!regex.test(#correo)) {
+ 
+            alert("Usar arroba.");
+ 
+            return false;
+ 
+        }
+ 
+    }
+    })
+    
+    </script>
+

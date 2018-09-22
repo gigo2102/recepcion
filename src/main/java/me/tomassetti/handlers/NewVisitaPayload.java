@@ -18,39 +18,45 @@ import me.tomassetti.model.Visita;
 public class NewVisitaPayload extends Visita implements Validable {
     private List<Area> areasList;
     private List<Motivo> motivosList;
-    private List<Persona> personasList;
     private List<TipoVisita> tipovisitasList;
+    private List<Motivo> motivodeareaList;
     private UUID areaId;
     private UUID motivoId;
-    private UUID personasId;
-    private UUID tipovisitasId;
+    private UUID personaId;
+    private UUID tipovisitaId;
+    private String nombre;
 	
 
 
 	
 	
- public NewVisitaPayload(List<Area> areasList , List <Motivo> motivosList , List <Persona> personasList, List <TipoVisita> tipovisitasList) {
+ public NewVisitaPayload(List<Area> areasList , List <Motivo> motivosList, List <TipoVisita> tipovisitasList) {
 		
 		this.setAreasList(areasList);
 		this.setMotivosList(motivosList);
-		this.setPersonasList(personasList);
 		this.setTipovisitasList(tipovisitasList);
+	
 		
 	}
 	public NewVisitaPayload() {
 		 
 		this.setAreasList(new ArrayList<Area> ());
 		this.setMotivosList(new ArrayList<Motivo> ());
-		this.setPersonasList(new ArrayList<Persona> ());
 		this.setTipovisitasList(new ArrayList<TipoVisita> ());
+	
 		
 	}
 	
-        public Object[] validate(Model model) {
+	   public Object[] validate(Model model) {
+		   
     	ArrayList<String> errors = new ArrayList<String>();
-    	if(getTipovisita() == null || getTipovisita().isEmpty()) {
-    		errors.add("Complete el tipo de visita");
+  if(getTipovisita() == null || getTipovisita().getNombre().isEmpty()) {
+    	errors.add("Complete el tipo de visita");
     	}
+    	
+    	if(getArea() == null || getArea().getNombre().isEmpty()) {
+		errors.add("Complete el area");
+	}
     	
     	return errors.toArray();
     }
@@ -67,7 +73,7 @@ public class NewVisitaPayload extends Visita implements Validable {
 		this.areaId = areaId;
 	}
 	
-	public List<Motivo> getMotivoList() {
+	public List<Motivo> getMotivosList() {
 		return motivosList;
 	}
 	public void setMotivosList(List<Motivo> motivosList) {
@@ -80,28 +86,30 @@ public class NewVisitaPayload extends Visita implements Validable {
 	public void setMotivoId(UUID motivoId) {
 		this.motivoId = motivoId;
 	}
-	
-	public List<Persona> getPersonaList() {
-		return personasList;
+
+	public UUID getPersonaId() {
+		return personaId;
 	}
-	public void setPersonasList(List<Persona> personasList) {
-		this.personasList = personasList;
+	public void setPersonaId(UUID id) {
+		personaId = id;
 	}
-	
-	public UUID getPersonasId() {
-		return personasId;
+	public UUID getTipovisitaId() {
+		return tipovisitaId;
 	}
-	public UUID getTipovisitasId() {
-		return tipovisitasId;
-	}
-	public void setTipovisitasId(UUID tipovisitasId) {
-		this.tipovisitasId = tipovisitasId;
+	public void setTipovisitaId(UUID tipovisitasId) {
+		this.tipovisitaId = tipovisitasId;
 	}
 	public List<TipoVisita> getTipovisitasList() {
 		return tipovisitasList;
 	}
 	public void setTipovisitasList(List<TipoVisita> tipovisitasList) {
 		this.tipovisitasList = tipovisitasList;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	

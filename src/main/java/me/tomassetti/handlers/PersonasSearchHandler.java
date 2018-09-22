@@ -4,6 +4,7 @@ import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Persona;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -20,8 +21,9 @@ public class PersonasSearchHandler extends AbstractRequestHandler<EmptyPayload> 
     }
 
     @Override
-    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
-        List<Persona> l = model.personasList();
+    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
+    	String searchTerm = urlParams.get("term");
+         List<Persona> l = model.personasList(searchTerm);
     	if (shouldReturnHtml) {
         	return view("personas_listado.ftl", l);
         } else {

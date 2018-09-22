@@ -7,6 +7,7 @@ import me.tomassetti.model.Model;
 import me.tomassetti.model.Persona;
 import me.tomassetti.model.TipoDocumento;
 import me.tomassetti.model.TipoVisita;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class PersonaCreateGetFormHandler extends AbstractRequestHandler<NewPerso
     }
 
     @Override
-    protected Answer processImpl(NewPersonaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewPersonaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	List<TipoDocumento> tipodocumentosList = sql2o_model.tipodocumentosList(null);
     	NewPersonaPayload viewModel = new NewPersonaPayload(tipodocumentosList);
     	return view("personas_create.ftl", viewModel);

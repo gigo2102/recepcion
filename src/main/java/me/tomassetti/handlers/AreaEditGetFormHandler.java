@@ -4,6 +4,7 @@ import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -21,7 +22,7 @@ public class AreaEditGetFormHandler extends AbstractRequestHandler<EditAreaPaylo
     }
 
     @Override
-    protected Answer processImpl(EditAreaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditAreaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	Area elArea = model.areasGetById(uuid);
 		return view("areas_edit.ftl", elArea);

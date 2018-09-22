@@ -17,7 +17,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	  <style>
 	  .ui-autocomplete-loading {
 	    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
@@ -130,7 +129,8 @@
         .footer-nav{
             margin-top: 70px;
             margin: 10px;
-
+      
+         
 
         }
 
@@ -562,6 +562,9 @@
 
       </style>
       
+      
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      
   </head>
   <body>
      <header id="header">
@@ -586,16 +589,13 @@
                         </div>
                     </div>
                 </div>
-
-
-
-            </div>
+               </div>
         </div>
         </div>
-    </header>
+        
+</header>
 
-
-    <div style="background-color: #fff;">
+   <div style="background-color: #fff;">
 
       <!-- NAVEGACIÓN PRINCIPAL -->
       <nav class="navbar navbar-default" role="navigation">
@@ -603,18 +603,33 @@
           <div class="row">
             <div class="navbar-header">
               <ul class="nav navbar-nav">
-                <li><a href="#">Nueva Visita</a></li>
-                <li><a href="#">Consultas</a></li>
-              </ul>
+               </ul>
                 <div class="icons-header">
-                    <span class="glyphicon glyphicon-search" style="padding: 15px 8px; color: #888; font-size: 1.25em;"></span><p>Buscar</p>
-                    <span class="glyphicon glyphicon-bell" style="padding: 15px 8px; color: #888; font-size: 1.25em;"></span><p>Notificaciones</p>
-                    <span class="glyphicon glyphicon-user" style="padding: 15px 8px; color: #888; font-size: 1.25em;"></span><p>Ingresar</p>
-                </div>
-            </div>
-            
-          </div>
-        </div>
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ 
+ <#if isLoggedIn>
+ 	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			Menu <span class="caret"></span>
+  		</button>
+      	<ul class="dropdown-menu" role="menu">
+	        <li><a href="/visitas">Visitas</a></li>
+	        <li><a href="/personas">Personas</a></li>
+	        <li><a href="/usuarios">Usuarios</a></li>
+	        <li><a href="/areas">Areas</a></li>
+	        <li><a href="/motivos">Motivos</a></li>
+	        <li><a href="/tipovisitas">Tipo de Visita</a></li>
+	        <li><a href="/tipodocumentos">Tipo de Documento</a></li>
+	        <li class="divider"></li>
+	        <li><a href="/logout">Cerrar Sesion</a></li>
+    	</ul>
+	</div>
+</#if>
+
+             
       </nav>
       <!-- FIN DE NAVEGACIÓN PRINCIPAL -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

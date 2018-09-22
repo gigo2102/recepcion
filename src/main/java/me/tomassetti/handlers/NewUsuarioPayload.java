@@ -28,10 +28,18 @@ public class NewUsuarioPayload extends Usuario implements Validable {
 
 	public Object[] validate(Model model) {
     	ArrayList<String> errors = new ArrayList<String>();
+    	
+    	if(getPass()== null || getPass().isEmpty()) {
+    		errors.add("Complete la contraseña!");
+    	}
+    	if(getCorreo() == null || getCorreo().isEmpty()) {
+    		errors.add("Complete el Correo!");
+    	}
+    	
     	if(getNombre() == null || getNombre().isEmpty()) {
     		errors.add("Complete el nombre!");
     	}
-    	if(model.areasExisteNombre(getNombre())) {
+    	if(model.usuariosExisteNombre(getNombre())) {
     		errors.add("Ya existe el mismo nombre!");
     	}
         return errors.toArray();

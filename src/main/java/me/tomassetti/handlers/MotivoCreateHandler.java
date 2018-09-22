@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public class MotivoCreateHandler extends AbstractRequestHandler<NewMotivoPayload
     }
 
     @Override
-    protected Answer processImpl(NewMotivoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewMotivoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
 		Object[] errors = value.validate(sql2o_model);
     	if (errors.length > 0) {
 			return view("motivos_create.ftl", value, errors);

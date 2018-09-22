@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Usuario;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UsuarioCreateGetFormHandler extends AbstractRequestHandler<NewUsuar
     }
 
     @Override
-    protected Answer processImpl(NewUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	List<Area> areasList = sql2o_model.areasList(null);
     	NewUsuarioPayload viewModel = new NewUsuarioPayload(areasList);
     	return view("usuarios_create.ftl", viewModel);

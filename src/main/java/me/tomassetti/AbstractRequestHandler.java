@@ -12,11 +12,13 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import me.tomassetti.handlers.EditAreaPayload;
 import me.tomassetti.handlers.EmptyPayload;
+import me.tomassetti.handlers.LoginPayload;
 import me.tomassetti.model.Model;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -28,6 +30,7 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
     private Class<V> valueClass;
     protected Model model;
     private FreeMarkerEngine freeMarkerEngine;
+    private boolean shouldBeLoggedIn = true;
 
     private static final int HTTP_BAD_REQUEST = 400;
 
@@ -35,6 +38,11 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
         this.valueClass = valueClass;
         this.model = model;
         this.freeMarkerEngine = freeMarkerEngine;
+    }
+    
+    public AbstractRequestHandler<V> NotLoggedIn() {
+		shouldBeLoggedIn = false;
+		return this;
     }
 
     private static boolean shouldReturnHtml(Request request) {
@@ -51,6 +59,8 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
     	viewModel.put("model", model);
     	viewModel.put("bodyTemplate", view);
     	viewModel.put("errors", errors);
+    	Boolean isLoggedIn = !(model != null && model instanceof LoginPayload);
+		viewModel.put("isLoggedIn", isLoggedIn);
         return new Answer(200, this.freeMarkerEngine.render(new ModelAndView(viewModel, "layout.ftl")));
     }
     
@@ -72,16 +82,41 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
         }
     }
 
-    public final Answer process(V value, Map<String, String> urlParams, boolean shouldReturnHtml) {
-        return processImpl(value, urlParams, shouldReturnHtml);
+    public final Answer process(V value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
+        return processImpl(value, urlParams, shouldReturnHtml, session);
     }
 
-    protected abstract Answer processImpl(V value, Map<String, String> urlParams, boolean shouldReturnHtml);
+    protected abstract Answer processImpl(V value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session);
 
+    private boolean ensureUserIsLoggedIn(Request request, Response response) {
+        if (request.session().attribute("currentUser") == null) {
+            response.redirect(RecepcionService.PathWebLogin);
+            return false;
+        }
+        return true;
+    }
+    
+    public class LoggedUser
+    {
+    	public LoggedUser(String userUuid, String userName) {
+			this.userUuid = userUuid;
+			this.userName = userName;
+		}
+    	
+		public String userUuid;
+    	public String userName;
+    }
+    
+    public void setLoggedUser(Session session, String userUuid, String userName) {
+    	session.attribute("currentUser", new LoggedUser(userUuid, userName));
+    }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
         try {
+        	if (shouldBeLoggedIn && !ensureUserIsLoggedIn(request, response)) {
+        		return null;
+        	}
             ObjectMapper objectMapper = new ObjectMapper();
             V value = null;
             if (valueClass != EmptyPayload.class) {
@@ -102,7 +137,7 @@ public abstract class AbstractRequestHandler<V extends Validable> implements Req
 				urlParams.put(elem.getKey(), elem.getValue()[0]);
 			}
             urlParams.putAll(request.params());
-            Answer answer = process(value, urlParams, shouldReturnHtml(request));
+            Answer answer = process(value, urlParams, shouldReturnHtml(request), request.session());
             response.status(answer.getCode());
             if (answer.getCode() == 303) {
             	response.redirect(answer.getBody(), answer.getCode());

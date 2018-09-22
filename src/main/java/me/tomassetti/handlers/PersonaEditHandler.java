@@ -8,6 +8,7 @@ import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Persona;
 import me.tomassetti.model.TipoDocumento;
 import me.tomassetti.model.Usuario;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -23,7 +24,7 @@ public class PersonaEditHandler extends AbstractRequestHandler<EditPersonaPayloa
     }
 
     @Override
-    protected Answer processImpl(EditPersonaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditPersonaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	value.setUuid(uuid);
 		Object[] errors = value.validate(sql2o_model);

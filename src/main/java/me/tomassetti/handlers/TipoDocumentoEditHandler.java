@@ -3,6 +3,7 @@ package me.tomassetti.handlers;
 import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
 import me.tomassetti.model.Model;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class TipoDocumentoEditHandler extends AbstractRequestHandler<EditTipoDoc
     }
 
     @Override
-    protected Answer processImpl(EditTipoDocumentoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditTipoDocumentoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	value.setUuid(uuid);
 		Object[] errors = value.validate(sql2o_model);

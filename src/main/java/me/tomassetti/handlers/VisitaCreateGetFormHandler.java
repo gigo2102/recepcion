@@ -8,6 +8,7 @@ import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Persona;
 import me.tomassetti.model.TipoDocumento;
 import me.tomassetti.model.TipoVisita;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -24,12 +25,11 @@ public class VisitaCreateGetFormHandler extends AbstractRequestHandler<NewVisita
     }
 
     @Override
-    protected Answer processImpl(NewVisitaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewVisitaPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	List<Area> areasList = sql2o_model.areasList(null);
     	List<Motivo>  motivosList = sql2o_model.motivosList();
-    	List<Persona> personasList = sql2o_model.personasList();
     	List<TipoVisita> tipovisitasList = sql2o_model.tipovisitaList();
-    	NewVisitaPayload viewModel = new NewVisitaPayload(areasList, motivosList , personasList, tipovisitasList);
+    	NewVisitaPayload viewModel = new NewVisitaPayload(areasList, motivosList, tipovisitasList);
     	
     	return view("visita_create.ftl", viewModel);
     }

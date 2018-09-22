@@ -6,6 +6,7 @@ import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
 import me.tomassetti.model.Usuario;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -21,7 +22,7 @@ public class UsuarioCreateHandler extends AbstractRequestHandler<NewUsuarioPaylo
     }
 
     @Override
-    protected Answer processImpl(NewUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(NewUsuarioPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
 		Object[] errors = value.validate(sql2o_model);
     	if (errors.length > 0) {
 			return view("usuarios_create.ftl", value, errors);

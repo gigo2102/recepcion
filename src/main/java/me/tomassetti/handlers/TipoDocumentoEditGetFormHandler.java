@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.TipoDocumento;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class TipoDocumentoEditGetFormHandler extends AbstractRequestHandler<Edit
     }
 
     @Override
-    protected Answer processImpl(EditTipoDocumentoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditTipoDocumentoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	TipoDocumento elTipoDocumento = model.tipodocumentoGetById(uuid);
 		return view("tipodocumentos_edit.ftl", elTipoDocumento);

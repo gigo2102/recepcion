@@ -5,11 +5,11 @@ import java.util.UUID;
 public class Visita {
 	
 	private UUID uuid;
-	private String tipovisita;
+	private String observaciones; 
+	private TipoVisita tipovisita;
 	private Persona persona;
 	private Area area;
 	private Motivo motivo;
-	private String observaciones; 
 	
 	
 	public UUID getUuid() {
@@ -44,10 +44,10 @@ public class Visita {
 		this.motivo = motivo;
 	}
 	
-	public String getTipovisita() {
+	public TipoVisita getTipovisita() {
 		return tipovisita;
 	}
-	public void setTipovisita(String tipovisita) {
+	public void setTipovisita(TipoVisita tipovisita) {
 		this.tipovisita = tipovisita;
 	}
 

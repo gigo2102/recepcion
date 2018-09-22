@@ -37,6 +37,8 @@ public interface Model {
 	
 	boolean areasExisteNombre(String nombre);
 	
+	boolean motivosExisteNombre(String nombre);
+	
     void updateArea(Area area);
     
     void updateTipoVisita(TipoVisita tipovisita);
@@ -68,7 +70,7 @@ public interface Model {
 
 	Motivo motivosGetById(UUID uuid);
 	
-	List<Persona> personasList();
+	List<Persona> personasList(String searchTerm);
 
 	void personasCreate(Persona persona);
 
@@ -92,6 +94,23 @@ public interface Model {
 
 	void TipoDocumentoDelete(UUID uuid);
 
+	List<Visita> visitasList();
+
+	Usuario usuariosGetByLogin(String usuario, String password);
+
+	boolean usuariosExisteNombre(String nombre);
+
+	boolean tipodocumentosExisteNombre(String getnombre);
+
+	boolean tipovisitasExisteNombre(String nombre);
+
+	boolean personaExisteDocumento(String valordocumento);
+
+
+
+	
+
+/*	List<Visita> visitasList();*/
 
 	
 

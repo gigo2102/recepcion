@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Persona;
 import me.tomassetti.model.Visita;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class VisitasSearchHandler extends AbstractRequestHandler<EmptyPayload> {
     }
 
     @Override
-    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
         List<Visita> l = model.visitasList();
     	if (shouldReturnHtml) {
         	return view("visitas_listado.ftl", l);

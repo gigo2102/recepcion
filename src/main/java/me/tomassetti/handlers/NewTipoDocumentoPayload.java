@@ -15,8 +15,8 @@ public class NewTipoDocumentoPayload extends TipoDocumento implements Validable 
     	if(getnombre() == null || getnombre().isEmpty()) {
     		errors.add("Complete el nombre!");
     	}
-    	if(model.areasExisteNombre(getnombre())) {
-    		errors.add("Ya existe un area con el mismo nombre!");
+    	if(model.tipodocumentosExisteNombre(getnombre())) {
+    		errors.add("Ya existe un tipo de documento con el mismo nombre!");
     	}
         return errors.toArray();
     }

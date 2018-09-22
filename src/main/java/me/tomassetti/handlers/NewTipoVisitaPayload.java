@@ -15,8 +15,8 @@ public class NewTipoVisitaPayload extends TipoVisita implements Validable {
     	if(getNombre() == null || getNombre().isEmpty()) {
     		errors.add("Complete el nombre!");
     	}
-    	if(model.areasExisteNombre(getNombre())) {
-    		errors.add("Ya existe un area con el mismo nombre!");
+    	if(model.tipovisitasExisteNombre(getNombre())) {
+    		errors.add("Ya existe un tipo de visita con el mismo nombre!");
     	}
         return errors.toArray();
     }

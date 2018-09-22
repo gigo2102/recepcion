@@ -3,6 +3,7 @@ package me.tomassetti.handlers;
 import me.tomassetti.AbstractRequestHandler;
 import me.tomassetti.Answer;
 import me.tomassetti.model.Model;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class TipoVisitasSearchHandler extends AbstractRequestHandler<EmptyPayloa
     }
 
     @Override
-    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EmptyPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
         return view("tipovisita_listado.ftl", model.tipovisitaList());
     }
 }

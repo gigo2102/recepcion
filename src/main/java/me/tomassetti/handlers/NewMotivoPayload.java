@@ -29,7 +29,7 @@ public class NewMotivoPayload extends Motivo implements Validable {
     	if(getNombre() == null || getNombre().isEmpty()) {
     		errors.add("Complete el nombre!");
     	}
-    	if(model.areasExisteNombre(getNombre())) {
+    	if(model.motivosExisteNombre(getNombre())) {
     		errors.add("Ya existe el mismo nombre!");
     	}
         return errors.toArray();

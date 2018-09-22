@@ -5,6 +5,7 @@ import me.tomassetti.Answer;
 import me.tomassetti.model.Area;
 import me.tomassetti.model.Model;
 import me.tomassetti.model.Motivo;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public class MotivoEditHandler extends AbstractRequestHandler<EditMotivoPayload>
     }
 
     @Override
-    protected Answer processImpl(EditMotivoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EditMotivoPayload value, Map<String, String> urlParams, boolean shouldReturnHtml, Session session) {
     	UUID uuid = UUID.fromString(urlParams.get(":uuid"));
     	value.setUuid(uuid);
 		Object[] errors = value.validate(sql2o_model);

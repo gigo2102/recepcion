@@ -113,6 +113,9 @@ public class Sql2oModel implements Model {
         }
 	}
 	
+
+	
+	
 	
 	@Override
 	public List<Usuario> usuariosList() {
@@ -150,13 +153,56 @@ public class Sql2oModel implements Model {
             return motivos;
         }
 	}
+	
+	@Override
+	public List<Visita> visitasList() {
+        try (Connection conn = sql2o.open()) {
+        	List<Visita> visitas = conn.createQuery("select uuid,observaciones from visitas")
+                    .executeAndFetch(Visita.class);
+        	for(Visita visita : visitas) {
+        		mapPersonaForVisita(visita, conn);
+        		mapAreaForVisita(visita , conn);
+        		mapMotivoForVisita(visita , conn);
+        		mapTipoVisitaForVisita(visita , conn);
+        	}
+            return visitas;
+        }
+	}
 
+	private void mapPersonaForVisita(Visita visita, Connection conn) {
+		Persona persona = conn.createQuery("select uuid,valorDocumento,nombre,apellido,correo,telefono from personas where uuid=(select personaid from visitas where uuid=:uuid)")
+				.addParameter("uuid", visita.getUuid())
+				.executeAndFetch(Persona.class).get(0);
+		visita.setPersona(persona);
+	}
+
+	private void mapAreaForVisita(Visita visita, Connection conn) {
+		Area area = conn.createQuery("select * from areas where uuid=(select areaid from visitas where uuid=:uuid)")
+				.addParameter("uuid", visita.getUuid())
+				.executeAndFetch(Area.class).get(0);
+		visita.setArea(area);
+	}
+	
+	private void mapTipoVisitaForVisita(Visita visita, Connection conn) {
+		TipoVisita tipovisita = conn.createQuery("select * from tipovisitas where uuid=(select tipovisitaid from visitas where uuid=:uuid)")
+				.addParameter("uuid", visita.getUuid())
+				.executeAndFetch(TipoVisita.class).get(0);
+		visita.setTipovisita(tipovisita);
+	}
+	
+	private void mapMotivoForVisita(Visita visita, Connection conn) {
+		Motivo motivo = conn.createQuery("select uuid,nombre from motivos where uuid=(select motivoid from visitas where uuid=:uuid)")
+				.addParameter("uuid", visita.getUuid())
+				.executeAndFetch(Motivo.class).get(0);
+		visita.setMotivo(motivo);
+	}
 
 	@Override
-	public List<Persona> personasList() {
+	public List<Persona> personasList(String searchTerm) {
         try (Connection conn = sql2o.open()) {
-        	List<Persona> personas = conn.createQuery("select uuid,nombre,apellido,correo,telefono,valordocumento from personas")
-                    .executeAndFetch(Persona.class);
+        	List<Persona> personas = conn.createQuery("select uuid,nombre,apellido,correo,telefono,valordocumento from personas where (:searchTerm is null or lower(nombre) like '%' || lower(:searchTerm) || '%' or lower(apellido) like '%' || lower(:searchTerm) || '%' or lower(valorDocumento) like '%' || lower(:searchTerm) || '%')")
+        			.addParameter("searchTerm", searchTerm)
+        			.executeAndFetch(Persona.class);
         	for(Persona persona : personas) {
         		mapTipoDocumentoForPersona(persona, conn);
         	}
@@ -164,7 +210,9 @@ public class Sql2oModel implements Model {
         }
 	}
 	
-	@Override
+
+	
+ /*	@Override
 	public List<Visita> visitasList() {
         try (Connection conn = sql2o.open()) {
         	List<Visita> visitas = conn.createQuery("select uuid,persona,area,tipodocumento,valordocumento from personas")
@@ -174,7 +222,7 @@ public class Sql2oModel implements Model {
         	}
             return visitas;
         }
-	}
+	}*/
 	
 
 	private void mapTipoDocumentoForPersona(Persona persona, Connection conn) {
@@ -279,12 +327,12 @@ public class Sql2oModel implements Model {
         try (Connection conn = sql2o.open()) {
             UUID uuid = uuidGenerator.generate();
             visita.setUuid(uuid);
-            conn.createQuery("insert into personas(uuid, tipovisitaid, areaid, motivoid, personaid , observaciones) VALUES (:uuid, :tipovisitaid , :areaid ,:motivoid , :personaid, :observaciones )")
+            conn.createQuery("insert into visitas(uuid, tipovisitaid, areaid, motivoid, personaid , observaciones) VALUES (:uuid, :tipovisitaid , :areaid ,:motivoid , :personaid, :observaciones )")
                     .addParameter("uuid", uuid)
-                    .addParameter("tipovisitaid", visita.getTipovisita())
-                    .addParameter("areaid", visita.getArea())
-                    .addParameter("motivoid", visita.getMotivo())
-                    .addParameter("personaid", visita.getPersona())
+                    .addParameter("tipovisitaid", visita.getTipovisita().getUuid())
+                    .addParameter("areaid", visita.getArea().getUuid())
+                    .addParameter("motivoid", visita.getMotivo().getUuid())
+                    .addParameter("personaid", visita.getPersona().getUuid())
                     .addParameter("observaciones", visita.getObservaciones())
                     .executeUpdate();
         }
@@ -314,6 +362,59 @@ public class Sql2oModel implements Model {
             return cant > 0;
         }
 	}
+	
+	@Override
+	public boolean motivosExisteNombre(String nombre) {
+        try (Connection conn = sql2o.open()) {
+            Long cant = (Long)conn.createQuery("select count(*) from motivos where nombre like :nombre")
+                    .addParameter("nombre", nombre)
+                    .executeScalar();
+            return cant > 0;
+        }
+	}
+	
+	@Override
+	public boolean personaExisteDocumento(String valordocumento) {
+        try (Connection conn = sql2o.open()) {
+            Long cant = (Long)conn.createQuery("select count(*) from personas where valordocumento like :valordocumento")
+                    .addParameter("valordocumento", valordocumento)
+                    .executeScalar();
+            return cant > 0;
+        }
+	}
+	
+
+	
+	@Override
+	public boolean tipovisitasExisteNombre(String nombre) {
+        try (Connection conn = sql2o.open()) {
+            Long cant = (Long)conn.createQuery("select count(*) from tipovisitas where nombre like :nombre")
+                    .addParameter("nombre", nombre)
+                    .executeScalar();
+            return cant > 0;
+        }
+	}
+	
+	@Override
+	public boolean tipodocumentosExisteNombre(String nombre) {
+        try (Connection conn = sql2o.open()) {
+            Long cant = (Long)conn.createQuery("select count(*) from motivos where nombre like :nombre")
+                    .addParameter("nombre", nombre)
+                    .executeScalar();
+            return cant > 0;
+        }
+	}
+	
+	@Override
+	public boolean usuariosExisteNombre(String nombre) {
+        try (Connection conn = sql2o.open()) {
+            Long cant = (Long)conn.createQuery("select count(*) from usuarios where nombre like :nombre")
+                    .addParameter("nombre", nombre)
+                    .executeScalar();
+            return cant > 0;
+        }
+	}
+	
 	
 	@Override
 	public void motivoDelete(UUID uuid) {
@@ -487,8 +588,28 @@ public class Sql2oModel implements Model {
 	
 	}
 
+	@Override
+	public Usuario usuariosGetByLogin(String nombre, String password) {
+        try (Connection conn = sql2o.open()) {
+            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass from usuarios where nombre=:usuario_nombre and pass=:usuario_password")
+                    .addParameter("usuario_nombre", nombre)
+                    .addParameter("usuario_password", password)
+                    .executeAndFetch(Usuario.class);
+            if (usuarios.size() == 1) {
+        		Usuario usuario = usuarios.get(0);
+            	mapAreaForUsuario(usuario, conn);
+                return usuario;
+            } else if (usuarios.size() == 0) {
+        		return null;
+            } else {
+                throw new RuntimeException();
+            }
+        }
+	}
 	
 }
+
+
 	
 
 	/*

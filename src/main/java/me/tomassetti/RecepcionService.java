@@ -31,6 +31,7 @@ public class RecepcionService
 {
 
     private static final Logger logger = Logger.getLogger(RecepcionService.class.getCanonicalName());
+	public static final String PathWebLogin = "/login";
 
     public static void main( String[] args) {
     	//creamos el objeto que contiene las configuraciones por defecto
@@ -75,9 +76,17 @@ public class RecepcionService
             }
         });
         
+        //INGRESO
+        get("/login", new LoginGetFormHandler(sql2o_model, freeMarkerEngine).NotLoggedIn());
+        post("/login", new LoginHandler(sql2o_model, freeMarkerEngine).NotLoggedIn());
+        get("/logout", new LogoutHandler(sql2o_model, freeMarkerEngine).NotLoggedIn());
+        
         //crear VISITA
         get("/visitas/create_form", new VisitaCreateGetFormHandler(sql2o_model, freeMarkerEngine));
         post("/visitas", new VisitaCreateHandler(sql2o_model, freeMarkerEngine));
+        
+        //listado
+        get("/visitas", new VisitasSearchHandler (sql2o_model, freeMarkerEngine));
 
         
       //configuramos las rutas de USUARIOS
