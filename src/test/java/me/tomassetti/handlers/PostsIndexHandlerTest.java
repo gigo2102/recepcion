@@ -7,14 +7,15 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 
-import me.tomassetti.Answer;
-import me.tomassetti.model.Model;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
+
+import ar.gcba.cactyt.common.Answer;
+import ar.gcba.cactyt.recepcion.models.Model;
 
 
 

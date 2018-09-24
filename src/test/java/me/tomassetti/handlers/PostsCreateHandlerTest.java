@@ -10,11 +10,11 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collections;
 import java.util.UUID;
 
-import me.tomassetti.Answer;
-import me.tomassetti.model.Model;
-
 import org.easymock.EasyMock;
 import org.junit.Test;
+
+import ar.gcba.cactyt.common.Answer;
+import ar.gcba.cactyt.recepcion.models.Model;
 
 
 public class PostsCreateHandlerTest {

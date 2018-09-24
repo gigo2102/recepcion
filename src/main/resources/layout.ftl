@@ -612,6 +612,9 @@
  
  <#if isLoggedIn>
  	<div class="btn-group">
+ 		Bienvenido ${currentUser.userName}!
+ 	</div>
+ 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			Menu <span class="caret"></span>
   		</button>
