@@ -42,6 +42,35 @@
 	
 	
  
-	<input class="btn btn-primary" type="submit" value="Crear" />
+	<input class="btn btn-primary" type="submit" value="Crear" id="btnCrear"/>
 	<a class="btn btn-default" href="/personas">Volver</a>
 </form>
+
+<script>
+$(function() {
+	$("#btnCrear").click(function (event) {
+		/* validar correo  */
+		var correo = document.querySelector("#correo").value;
+		if(correo != "") {
+			var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			if(!regex.test(correo)) {
+				alert("Usar arroba.");
+				return false;
+			}
+			/* validar telefono  */
+			var telefono = document.querySelector("#telefono").value;
+    if (!/^([0-9])*$/.test(telefono))
+      alert("El valor " debe contener solo numeros");
+  }
+			
+			
+			return true;
+		}
+	
+
+		return true;
+	});
+});
+</script>
+
+

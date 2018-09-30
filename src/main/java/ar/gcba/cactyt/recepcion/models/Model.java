@@ -1,9 +1,12 @@
 package ar.gcba.cactyt.recepcion.models;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface Model {
+	Map<String, Object> kendoSearch(Class<?> clazz, String subQuery, Map<String, String> params);
+	
     void areaDelete(UUID uuid);
     
     void personaDelete(UUID uuid);

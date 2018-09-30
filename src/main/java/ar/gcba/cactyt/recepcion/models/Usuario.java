@@ -11,6 +11,7 @@ public class Usuario {
     private String correo;
     private String pass;
     private Area area;
+    private boolean esAdmin;
     
 	public UUID getUuid() {
 		return uuid;
@@ -50,5 +51,13 @@ public class Usuario {
 
 	public void setArea(Area area) {
 		this.area = area;
+	}
+
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
 	}
 }

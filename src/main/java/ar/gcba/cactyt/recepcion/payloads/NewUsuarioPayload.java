@@ -42,6 +42,9 @@ public class NewUsuarioPayload extends Usuario implements Validable {
     	if(model.usuariosExisteNombre(getNombre())) {
     		errors.add("Ya existe el mismo nombre!");
     	}
+    	if(getAreaid() == null) {
+    		errors.add("Complete el area");
+    	}
         return errors.toArray();
     }
 	public List<Area> getAreasList() {

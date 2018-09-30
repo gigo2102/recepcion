@@ -103,7 +103,8 @@ public class RecepcionService
 
         //configuramos las rutas de PERSONA
         //listado
-         routes.get("/personas", PersonasSearchHandler .class);
+        routes.get("/personas", PersonasSearchKendoHandler .class);
+        routes.get("/personas/kendo_search", PersonasSearchKendoFiltersHandler .class);
      
         //crear
         routes.get("/personas/create_form", PersonaCreateGetFormHandler.class);

@@ -1,16 +1,13 @@
 package ar.gcba.cactyt.recepcion.models;
 
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
-
 import ar.gcba.cactyt.common.RandomUuidGenerator;
 import ar.gcba.cactyt.common.UuidGenerator;
-import ar.gcba.cactyt.recepcion.payloads.EmptyPayload;
-
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.UUID;
 
 public class Sql2oModel implements Model {
@@ -598,7 +595,39 @@ public class Sql2oModel implements Model {
             }
         }
 	}
-	
+
+	@Override
+	public Map<String, Object> kendoSearch(Class<?> clazz, String subQuery, Map<String, String> params) {
+        try (Connection conn = sql2o.open()) {
+        	String q = "select * from (" + subQuery + ") as x ";
+        	if (params.containsKey("filterField")) {
+    			q = q + " where lower(cast(" + params.get("filterField") + " as varchar)) like '%' || lower(:" + params.get("filterField") + ") || '%'";
+        	}
+        	
+        	Query builderTotal = conn.createQuery("select count(1) from (" + q + ") as x2");
+        	if (params.containsKey("filterField")) {
+        		builderTotal = builderTotal.addParameter(params.get("filterField"), params.get("filterValue"));
+        	}
+        	long total = (long) builderTotal.executeScalar();
+        	
+        	if (params.containsKey("sortField")) {
+    			q = q + " order by " + params.get("sortField") + " " + params.get("sortDir");
+        	}
+        	q = q + " limit " + params.get("take");
+        	q = q + " offset " + params.get("skip");
+        	
+        	Query builderData = conn.createQuery(q);
+        	if (params.containsKey("filterField")) {
+        		builderData = builderData.addParameter(params.get("filterField"), params.get("filterValue"));
+        	}
+            List<?> l = builderData.executeAndFetch(clazz);
+            
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("total", total);
+            result.put("data", l);
+            return result;
+        }
+	}
 }
 
 

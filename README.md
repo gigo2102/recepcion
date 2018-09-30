@@ -1,16 +1,14 @@
 TODO
 ====
 
-Validaciones
 paginacion
 Filtro en visitas y personas - Terminar 
 cargar excel csv de empleados
 en listado de personas no mostrar los empleados
 en alta de visita, segun el tipo de visita, que el autocomplete busque empleados o no empleados
-cuando se administren (alta y edicion) de personas por front end, solo se puede con no emplados
-Mostrar nombre de usuario logueado
+cuando se administren (alta y edicion) de personas por front end, solo se puede con no empleados
 implementar seguridad, agregando campo esAdmin en usuario y que se guarde en session
-en alta de visita, agregar javascript para que los motivos se carguen en fcion de las areas
+en alta de visita, agregar javascript para que los motivos se carguen en fcion de las areas o tener desplegable que 
 
 
 TO READ
