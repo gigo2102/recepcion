@@ -1,4 +1,4 @@
-<h2>Listado de Personas</h2>
+<h2>Listado de Visitas</h2>
 
 <div id="grid"></div>
 <script>
@@ -7,7 +7,7 @@
             dataSource: {
                 transport: {
                     read: {
-                    	url: '/personas/kendo_search',
+                    	url: '/visitas/kendo_search',
                     	type: 'get',
                     	dataType: 'json',
                     	contentType: 'application/json'
@@ -20,10 +20,13 @@
                 	model: {
                 		fields: {
                 			uuid: { type: 'string' },
-                			nombre: { type: 'string' },
-                			apellido: { type: 'string' },
-                			telefono: { type: 'string' },
-                			valorDocumento: { type: 'string' }
+                			observaciones: { type: 'string' },
+							areaNombre: { type: 'string' },
+							motivoNombre: { type: 'string' },
+							personaNombre: { type: 'string' },
+							personaApellido: { type: 'string' },
+							personaValorDocumento: { type: 'string' },
+							tipoVisitaNombre: { type: 'string' }
                 		}
                 	}
                 },
@@ -32,7 +35,7 @@
                 serverFiltering: true,
                 serverSorting: true
             },
-            height: 350,
+            height: 550,
             groupable: false,
             sortable: true,
             filterable: true,
@@ -42,14 +45,17 @@
                 buttonCount: 5
             },
             columns: [
-				{ field: "nombre", title: "Nombre" },
-				{ field: "apellido", title: "Apellido" },
-				{ field: "telefono", title: "Tel." },
-				{ field: "valorDocumento", title: "Doc." },
-				{ template: "<a class='' href='/personas/#:data.uuid#/edit_form'>Editar</a>" }
+				{ field: "uuid", title: "Id" },
+				{ field: "observaciones", title: "Observaciones" },
+				{ field: "areaNombre", title: "Area" },
+				{ field: "motivoNombre", title: "Motivo" },
+				{ field: "personaNombre", title: "Nombre" },
+				{ field: "personaApellido", title: "Apellido" },
+				{ field: "personaValorDocumento", title: "Documento" },
+				{ field: "tipoVisitaNombre", title: "Tipo Visita" }
 			]
         });
     });
 </script>
 
-<a class="btn btn-lg btn-default" href="/personas/create_form">Nuevo</a>
+<a class="btn btn-lg btn-default" href="/visitas/create_form">Nuevo</a>

@@ -82,8 +82,10 @@ public class RecepcionService
         routes.get("/visitas/create_form", VisitaCreateGetFormHandler.class);
         routes.post("/visitas", VisitaCreateHandler.class);
         
+       
         //listado
-        routes.get("/visitas", VisitasSearchHandler .class);
+        routes.get("/visitas", VisitasSearchKendoHandler .class);
+        routes.get("/visitas/kendo_search", VisitasSearchKendoFiltersHandler .class);
 
         
       //configuramos las rutas de USUARIOS
@@ -184,6 +186,11 @@ public class RecepcionService
         routes.get("/motivos/:uuid/edit_form", MotivoEditGetFormHandler.class);
         routes.post("/motivos/:uuid/", MotivoEditHandler.class); //AreaUpdatePayload
         
+        //configuramos las rutas de MOTIVOS
+        //listado
+       
+        routes.get("/api", IndexHandler.class);
+        routes.post("/api/upload", IndexHandler.class); //AreaUpdatePayload
 
         
         

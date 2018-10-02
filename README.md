@@ -1,8 +1,5 @@
 TODO
 ====
-
-paginacion
-Filtro en visitas y personas - Terminar 
 cargar excel csv de empleados
 en listado de personas no mostrar los empleados
 en alta de visita, segun el tipo de visita, que el autocomplete busque empleados o no empleados

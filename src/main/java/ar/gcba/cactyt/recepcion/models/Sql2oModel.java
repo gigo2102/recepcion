@@ -144,10 +144,11 @@ public class Sql2oModel implements Model {
 	}
 	
 	@Override
-	public List<Visita> visitasList() {
+	public List<Visita> visitasList(String searchTerm) {
         try (Connection conn = sql2o.open()) {
         	List<Visita> visitas = conn.createQuery("select uuid,observaciones from visitas")
-                    .executeAndFetch(Visita.class);
+        	.addParameter("searchTerm", searchTerm)
+			.executeAndFetch(Visita.class);
         	for(Visita visita : visitas) {
         		mapPersonaForVisita(visita, conn);
         		mapAreaForVisita(visita , conn);

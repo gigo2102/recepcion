@@ -10,6 +10,7 @@ public class Persona {
 	private String apellido;
 	private String correo;
 	private String telefono;
+	private boolean esEmpleado;
     
 	public UUID getUuid() {
 		return uuid;
@@ -71,6 +72,14 @@ public class Persona {
 
 	public void setValorDocumento(String valorDocumento) {
 		this.valorDocumento = valorDocumento;
+	}
+
+	public boolean isEsEmpleado() {
+		return esEmpleado;
+	}
+
+	public void setEsEmpleado(boolean esEmpleado) {
+		this.esEmpleado = esEmpleado;
 	}
 
 	

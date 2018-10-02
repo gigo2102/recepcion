@@ -10,7 +10,8 @@ public class VisitasSearchHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
         Model model = getModel();
-    	List<Visita> l = model.visitasList();
+        String searchTerm = getUrlParams().get("term");
+    	List<Visita> l = model.visitasList(searchTerm);
     	if (isShouldReturnHtml()) {
         	return view("visitas_listado.ftl", l);
         } else {
