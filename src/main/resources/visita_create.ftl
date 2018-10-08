@@ -23,22 +23,12 @@
 
 	<a class="btn btn-default" href="/personas/create_form" target="_blank">Agregar Persona</a>
 
-    <div class="form-group has-button">
-        <label class="control-label" for="areaid">Area</label>
-        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="areaId">
-            <option value=""> ... </option>
-            <#list model.areasList as area>
-				<option value="${area.uuid}" <#if model.areaId?? && model.areaId == area.uuid>selected</#if>>${area.nombre}</option>
-			</#list>
-        </select>
-    </div> 
-    
        <div class="form-group has-button">
-        <label class="control-label" for="motivoId">Motivo</label>
+        <label class="control-label" for="motivoId">Area - Motivo</label>
         <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="motivoId">
             <option value=""> ... </option>
             <#list model.motivosList as motivo>
-				<option value="${motivo.uuid}" <#if model.motivoId?? && model.motivoId == motivo.uuid>selected</#if>>${motivo.nombre}</option>
+				<option value="${motivo.uuid}" <#if model.motivoId?? && model.motivoId == motivo.uuid>selected</#if>>${motivo.area.nombre} - ${motivo.nombre}</option>
 			</#list>
         </select>
     </div>

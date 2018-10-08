@@ -117,6 +117,7 @@ public class Sql2oModel implements Model {
 	            return usuarios;
 	        }
 		}
+	
 		
 	
 	
@@ -134,7 +135,7 @@ public class Sql2oModel implements Model {
 	@Override
 	public List<Motivo> motivosList() {
         try (Connection conn = sql2o.open()) {
-        	List<Motivo> motivos = conn.createQuery("select uuid,nombre from motivos")
+        	List<Motivo> motivos = conn.createQuery("select uuid,nombre from motivos order by areaid,nombre")
                     .executeAndFetch(Motivo.class);
         	for(Motivo motivo : motivos) {
         		mapAreaForMotivo(motivo, conn);
@@ -289,8 +290,24 @@ public class Sql2oModel implements Model {
         }
 	}
 	
-	
-	
+	@Override
+	public void empleadosUpdater(Empleados empleado) {
+        try (Connection conn = sql2o.open()) {
+            UUID uuid = uuidGenerator.generate();
+            empleado.setUuid(uuid);
+            conn.createQuery("insert into personas(uuid, nombre, apellido, cuil, tipodocumentoid, valorDocumento, correo, telefono,celular, ht, esempleado) VALUES (:uuid, :nombre , :apellido ,:cuil , (select uuid from public.tipodocumentos where lower(nombre)='dni'), :valorDocumento, :correo , :telefono , :celular , :ht, true)")
+                    .addParameter("uuid", uuid)
+                    .addParameter("nombre", empleado.getNombre())
+                    .addParameter("apellido", empleado.getApellido())
+                    .addParameter("cuil", empleado.getCuil())
+                    .addParameter("valorDocumento", empleado.getDni())
+                    .addParameter("correo", empleado.getCorreo())
+                    .addParameter("telefono", empleado.getTelparticular())
+                    .addParameter("celular", empleado.getCelular())
+                    .addParameter("ht", empleado.getHt())
+                    .executeUpdate();
+        }
+	}
 	
 	@Override
 	public void personasCreate(Persona persona) {

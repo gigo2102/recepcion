@@ -3,7 +3,6 @@ package ar.gcba.cactyt.recepcion.handlers;
 import java.util.List;
 import ar.gcba.cactyt.common.AbstractRequestHandler;
 import ar.gcba.cactyt.common.Answer;
-import ar.gcba.cactyt.recepcion.models.Area;
 import ar.gcba.cactyt.recepcion.models.Model;
 import ar.gcba.cactyt.recepcion.models.Motivo;
 import ar.gcba.cactyt.recepcion.models.TipoVisita;
@@ -18,11 +17,9 @@ public class VisitaCreateHandler extends AbstractRequestHandler {
 		
     	Object[] errors = value.validate(model);
     	if (errors.length > 0) {
-        	List<Area> areasList = model.areasList(null);
         	List<Motivo>  motivosList = model.motivosList();
         	List<TipoVisita> tipovisitasList = model.tipovisitaList();
         	
-        	value.setAreasList(areasList);
         	value.setMotivosList(motivosList);
         	value.setTipovisitasList(tipovisitasList);
 
@@ -31,8 +28,9 @@ public class VisitaCreateHandler extends AbstractRequestHandler {
     	
     	Visita v = new Visita();
     	v.setTipovisita(model.tipovisitasGetById(value.getTipovisitaId()));
-    	v.setArea(model.areasGetById(value.getAreaId()));
-    	v.setMotivo(model.motivosGetById(value.getMotivoId()));
+    	Motivo motivo = model.motivosGetById(value.getMotivoId());
+    	v.setArea(motivo.getArea());
+    	v.setMotivo(motivo);
     	v.setPersona(model.personasGetById(value.getPersonaId()));
     	v.setObservaciones(value.getObservaciones());
 

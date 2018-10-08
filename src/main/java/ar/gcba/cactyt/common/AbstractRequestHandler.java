@@ -2,9 +2,16 @@ package ar.gcba.cactyt.common;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -29,6 +36,15 @@ public abstract class AbstractRequestHandler {
     private Response response;
     private String requestBody;
 
+    public Part getPart(String name) {
+		try {
+			return request.raw().getPart(name);
+		} catch (IOException | ServletException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error en getpart");
+		}
+    }
+    
     public boolean isShouldReturnHtml() {
 		return shouldReturnHtml;
 	}
@@ -132,10 +148,12 @@ public abstract class AbstractRequestHandler {
     {
 		private String userUuid;
     	private String userName;
+    	private List<String> roles;
 
-    	public LoggedUser(String userUuid, String userName) {
+    	public LoggedUser(String userUuid, String userName, String[] roles) {
 			this.userUuid = userUuid;
 			this.userName = userName;
+			this.roles = Arrays.asList(roles);
 		}
     	
 		public String getUserUuid() {
@@ -145,10 +163,19 @@ public abstract class AbstractRequestHandler {
 		public String getUserName() {
 			return userName;
 		}
+	
+		public List<String> getRoles() {
+			return roles;
+		}
     }
     
-    protected void setLoggedUser(Session session, String userUuid, String userName) {
-    	session.attribute("currentUser", new LoggedUser(userUuid, userName));
+    protected void setLoggedUser(Session session, String userUuid, String userName, String[] roles) {
+    	session.attribute("currentUser", new LoggedUser(userUuid, userName, roles));
+    }
+    
+    protected boolean hasRole(String roleName) {
+    	if (!isLoggedIn()) return false;
+    	return ((LoggedUser)session.attribute("currentUser")).getRoles().contains(roleName);
     }
     
     protected Boolean isLoggedIn() {

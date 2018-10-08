@@ -24,8 +24,9 @@ public class Empleados {
     	this.cuil = cuil;
     	this.dni = dni;
     	this.correo = correo;
+    	this.telparticular = telparticular;
+    	this.celular = celular;
     	this.ht = ht;
-    
     }
 
 

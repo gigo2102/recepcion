@@ -640,12 +640,14 @@
   		</button>
       	<ul class="dropdown-menu" role="menu">
 	        <li><a href="/visitas">Visitas</a></li>
-	        <li><a href="/personas">Personas</a></li>
-	        <li><a href="/usuarios">Usuarios</a></li>
-	        <li><a href="/areas">Areas</a></li>
-	        <li><a href="/motivos">Motivos</a></li>
-	        <li><a href="/tipovisitas">Tipo de Visita</a></li>
-	        <li><a href="/tipodocumentos">Tipo de Documento</a></li>
+			<li><a href="/personas">Personas</a></li>
+	        <#if currentUser.roles?seq_contains("admin")>
+		        <li><a href="/usuarios">Usuarios</a></li>
+		        <li><a href="/areas">Areas</a></li>
+		        <li><a href="/motivos">Motivos</a></li>
+		        <li><a href="/tipovisitas">Tipo de Visita</a></li>
+		        <li><a href="/tipodocumentos">Tipo de Documento</a></li>
+	        </#if>
 	        <li class="divider"></li>
 	        <li><a href="/logout">Cerrar Sesion</a></li>
     	</ul>

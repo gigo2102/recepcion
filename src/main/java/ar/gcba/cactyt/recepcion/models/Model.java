@@ -87,4 +87,8 @@ public interface Model {
 	boolean tipovisitasExisteNombre(String nombre);
 
 	boolean personaExisteDocumento(String valordocumento);
+
+	void empleadosUpdater(Empleados empleado);
+
+
 }

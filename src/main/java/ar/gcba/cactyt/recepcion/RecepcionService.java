@@ -189,8 +189,8 @@ public class RecepcionService
         //configuramos las rutas de MOTIVOS
         //listado
        
-        routes.get("/api", IndexHandler.class);
-        routes.post("/api/upload", IndexHandler.class); //AreaUpdatePayload
+        routes.get("/personas/empleados/importacion", EmpleadosImportacionHandler.class);
+        routes.post("/personas/empleados/importacion/upload", EmpleadosImportacionUploadHandler.class); //AreaUpdatePayload
 
         
         

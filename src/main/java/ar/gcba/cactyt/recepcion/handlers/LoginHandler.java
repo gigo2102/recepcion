@@ -18,7 +18,8 @@ public class LoginHandler extends AbstractRequestHandler {
     		errors.add("Usuario o clave incorrectos...");
 			return view("ingreso.ftl", value, errors.toArray());
 		}
-    	setLoggedUser(getSession(), usuario.getUuid().toString(), usuario.getNombre());
+    	String[] roles = usuario.getEsAdmin() ? new String[] {"admin"}: new String[0];
+    	setLoggedUser(getSession(), usuario.getUuid().toString(), usuario.getNombre(), roles);
 		return redirect("/visitas");
     }
 }
