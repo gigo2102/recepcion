@@ -21,6 +21,7 @@ public class MotivoEditGetFormHandler extends AbstractRequestHandler {
     	viewModel.setUuid(elMotivo.getUuid());
     	viewModel.setNombre(elMotivo.getNombre());
     	viewModel.setAreaId(elMotivo.getArea().getUuid());
+    	if (!hasRole("admin")) return redirect("/logout");
     	
 		return view("motivos_edit.ftl", viewModel);
     }

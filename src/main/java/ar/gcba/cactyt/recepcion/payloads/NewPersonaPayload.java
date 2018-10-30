@@ -39,6 +39,10 @@ public class NewPersonaPayload extends Persona implements Validable {
     		errors.add("Complete el apellido!");
     	}
     	
+    	if(getCorreo() == null || getCorreo().isEmpty()) {
+    		errors.add("Complete el correo!");
+    	}
+    	
     	if(getTelefono() == null || getTelefono().isEmpty()) {
     		errors.add("Complete el telefono!");
     	}

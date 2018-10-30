@@ -12,6 +12,7 @@ public class TipoDocumentoEditHandler extends AbstractRequestHandler {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	EditTipoDocumentoPayload value = getValue(EditTipoDocumentoPayload.class);
     	value.setUuid(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
     	Model model = getModel();
 		Object[] errors = value.validate(model);
     	if (errors.length > 0) {

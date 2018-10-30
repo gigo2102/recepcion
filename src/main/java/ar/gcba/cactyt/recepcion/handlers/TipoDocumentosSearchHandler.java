@@ -8,7 +8,9 @@ public class TipoDocumentosSearchHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
     	String nombre = getUrlParams().get("nombre");
+    	if (!hasRole("admin")) return redirect("/logout");
     	Model model = getModel();
         return view("tipodocumentos_listado.ftl", model.tipodocumentosList(nombre));
     }
 }
+

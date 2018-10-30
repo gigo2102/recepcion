@@ -11,6 +11,7 @@ public class AreaEditGetFormHandler extends AbstractRequestHandler {
     public Answer process() {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Area elArea = ((Model)getModel()).areasGetById(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
 		return view("areas_edit.ftl", elArea);
     }
 }

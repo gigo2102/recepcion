@@ -13,6 +13,7 @@ public class UsuarioEditGetFormHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
+    	if (!hasRole("admin")) return redirect("/logout");
     	Model model = getModel();
     	Usuario elUsuario = model.usuariosGetById(uuid);
 

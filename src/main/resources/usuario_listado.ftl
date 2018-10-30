@@ -4,16 +4,16 @@
 	<tr>
 		<th>Nombre</th>
 		<th>Correo</th>
-		<th>Contraseña</th>
 		<th>Area</th>
+		<th>Permisos</th>
 		<th>Acciones</th>
 	</tr>
 	<#list model as unUsuario>
 		<tr>
-		   <td> ${unUsuario.area.nombre}</td> 
         	<td> ${unUsuario.nombre}</td>
         	<td> ${unUsuario.correo}</td>
-        	<td> ${unUsuario.pass}</td>
+		   <td> ${unUsuario.area.nombre}</td> 
+		   <td> ${unUsuario.esAdmin?string("Admin", "")}</td> 
         	
 	        <td> 
 	        <a class="info" " href="/usuarios/${unUsuario.uuid}/edit_form">Editar</a>

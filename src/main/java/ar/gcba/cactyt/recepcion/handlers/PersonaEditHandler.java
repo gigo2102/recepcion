@@ -11,6 +11,7 @@ import ar.gcba.cactyt.recepcion.payloads.EditPersonaPayload;
 public class PersonaEditHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	EditPersonaPayload value = getValue(EditPersonaPayload.class);
     	value.setUuid(uuid);

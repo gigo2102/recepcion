@@ -8,6 +8,7 @@ import ar.gcba.cactyt.recepcion.models.Model;
 public class PersonasDeleteHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
     	model.personaDelete(uuid);

@@ -11,7 +11,7 @@ public class VisitasSearchHandler extends AbstractRequestHandler {
     public Answer process() {
         Model model = getModel();
         String searchTerm = getUrlParams().get("term");
-    	List<Visita> l = model.visitasList(searchTerm);
+    	List<Visita> l = model.visitasList(searchTerm, null, null);
     	if (isShouldReturnHtml()) {
         	return view("visitas_listado.ftl", l);
         } else {

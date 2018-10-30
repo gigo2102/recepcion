@@ -7,8 +7,9 @@ import ar.gcba.cactyt.recepcion.models.Model;
 public class AreasSearchHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
-    	String nombre = getUrlParams().get("nombre");
+    	if (!hasRole("admin")) return redirect("/logout");
     	Model model = getModel();
-        return view("areas_listado.ftl", model.areasList(nombre));
+        return view("areas_listado.ftl", model.areasList(null));
+    
     }
 }

@@ -7,6 +7,7 @@ import ar.gcba.cactyt.recepcion.models.TipoDocumento;
 public class TipoDocumentoCreateGetFormHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
     	return view("tipodocumentos_create.ftl", new TipoDocumento());
     }
 }

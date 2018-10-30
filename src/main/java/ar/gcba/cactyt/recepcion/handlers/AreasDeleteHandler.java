@@ -11,6 +11,7 @@ public class AreasDeleteHandler extends AbstractRequestHandler {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
     	model.areaDelete(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/areas");
     }
 }

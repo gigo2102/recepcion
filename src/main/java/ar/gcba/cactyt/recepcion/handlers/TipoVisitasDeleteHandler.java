@@ -11,6 +11,7 @@ public class TipoVisitasDeleteHandler extends AbstractRequestHandler {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
     	model.tipovisitasDelete(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/tipovisitas");
     }
 }

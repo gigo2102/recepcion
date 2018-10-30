@@ -178,6 +178,11 @@ public abstract class AbstractRequestHandler {
     	return ((LoggedUser)session.attribute("currentUser")).getRoles().contains(roleName);
     }
     
+    protected LoggedUser getLoggedUser() {
+    	if (!isLoggedIn()) return null;
+    	return (LoggedUser)session.attribute("currentUser");
+    }
+    
     protected Boolean isLoggedIn() {
 		return session.attribute("currentUser") != null;
 	}

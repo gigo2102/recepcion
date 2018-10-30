@@ -10,6 +10,7 @@ public class Visita {
 	private Persona persona;
 	private Area area;
 	private Motivo motivo;
+	private boolean fueAtendido = false;
 	
 	
 	public UUID getUuid() {
@@ -50,9 +51,11 @@ public class Visita {
 	public void setTipovisita(TipoVisita tipovisita) {
 		this.tipovisita = tipovisita;
 	}
-
-	
-
-
+	public boolean isFueAtendido() {
+		return fueAtendido;
+	}
+	public void setFueAtendido(boolean fueAtendido) {
+		this.fueAtendido = fueAtendido;
+	}
 
 }

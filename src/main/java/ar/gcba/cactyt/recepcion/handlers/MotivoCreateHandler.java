@@ -10,6 +10,7 @@ import ar.gcba.cactyt.recepcion.payloads.NewMotivoPayload;
 public class MotivoCreateHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
     	NewMotivoPayload value = getValue(NewMotivoPayload.class);
     	Model model = getModel();
     	Object[] errors = value.validate(model);

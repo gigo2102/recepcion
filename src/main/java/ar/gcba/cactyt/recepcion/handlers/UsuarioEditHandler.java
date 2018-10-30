@@ -11,6 +11,7 @@ import ar.gcba.cactyt.recepcion.payloads.EditUsuarioPayload;
 public class UsuarioEditHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	EditUsuarioPayload value = getValue(EditUsuarioPayload.class);
     	value.setUuid(uuid);

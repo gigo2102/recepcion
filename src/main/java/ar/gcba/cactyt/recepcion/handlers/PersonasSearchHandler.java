@@ -13,9 +13,13 @@ public class PersonasSearchHandler extends AbstractRequestHandler {
         Model model = getModel();
     	List<Persona> l = model.personasList(searchTerm);
     	if (isShouldReturnHtml()) {
+        	if (!hasRole("admin")) return redirect("/logout");
         	return view("personas_listado.ftl", l);
         } else {
         	return json(l);
         }
     }
 }
+
+
+

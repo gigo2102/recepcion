@@ -15,6 +15,7 @@ public class TipoVisitaCreateHandler extends AbstractRequestHandler {
 			return view("tiposvisita_create.ftl", value, errors);
 		}
 		model.tipovisitasCreate(value);
+		if (!hasRole("admin")) return redirect("/logout");
 		return redirect("/tipovisitas");
     }
 }

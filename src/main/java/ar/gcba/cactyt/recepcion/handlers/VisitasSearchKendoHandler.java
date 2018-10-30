@@ -16,7 +16,7 @@ public class VisitasSearchKendoHandler extends AbstractRequestHandler {
             Model model = getModel();
     		//para los que usan como webservice por ejemplo para autocompletes
         	String searchTerm = getUrlParams().get("term");
-        	List<Visita> l = model.visitasList(searchTerm);
+        	List<Visita> l = model.visitasList(searchTerm, null, null);
     		return json(l);
         }
     }

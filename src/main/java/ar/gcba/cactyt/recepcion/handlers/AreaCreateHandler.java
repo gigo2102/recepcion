@@ -11,6 +11,7 @@ public class AreaCreateHandler extends AbstractRequestHandler {
     	NewAreaPayload value = getValue(NewAreaPayload.class);
     	Model model = getModel();
 		Object[] errors = value.validate(model);
+		if (!hasRole("admin")) return redirect("/logout");
     	if (errors.length > 0) {
 			return view("areas_create.ftl", value, errors);
 		}

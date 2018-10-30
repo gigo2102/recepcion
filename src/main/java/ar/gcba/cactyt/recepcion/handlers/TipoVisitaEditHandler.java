@@ -18,6 +18,7 @@ public class TipoVisitaEditHandler extends AbstractRequestHandler {
 			return view("tipovisita_edit.ftl", value, errors);
 		}
     	model.updateTipoVisita(value);
+    	if (!hasRole("admin")) return redirect("/logout");
 		return redirect("/tipovisitas");
     }
 

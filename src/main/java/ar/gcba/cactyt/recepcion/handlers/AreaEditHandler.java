@@ -14,6 +14,7 @@ public class AreaEditHandler extends AbstractRequestHandler {
     	EditAreaPayload value = getValue(EditAreaPayload.class);
     	value.setUuid(uuid);
 		Model model = getModel();
+		if (!hasRole("admin")) return redirect("/logout");
 		Object[] errors = value.validate(model);
     	if (errors.length > 0) {
 			return view("areas_edit.ftl", value, errors);

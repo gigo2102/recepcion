@@ -9,6 +9,7 @@ import ar.gcba.cactyt.recepcion.models.Persona;
 public class PersonasSearchKendoHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    
     	if (isShouldReturnHtml()) {
         	return view("personas_listado_kendo.ftl", null);
         } else {
@@ -16,6 +17,7 @@ public class PersonasSearchKendoHandler extends AbstractRequestHandler {
     		//para los que usan como webservice por ejemplo para autocompletes
         	String searchTerm = getUrlParams().get("term");
         	List<Persona> l = model.personasList(searchTerm);
+        	if (!hasRole("admin")) return redirect("/logout");
     		return json(l);
         }
     }

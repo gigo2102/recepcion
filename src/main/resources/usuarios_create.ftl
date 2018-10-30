@@ -26,6 +26,16 @@
         </select>
     </div>
     
+     <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+            <input type="checkbox"> Es administrador 
+            </label>
+          </div>
+        </div>
+      </div>
+    
 	<input class="btn btn-primary" type="submit" value="Crear" id="btnCrear" />
 	<a class="btn btn-default" href="/usuarios">Volver</a>
 </form>

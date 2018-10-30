@@ -8,6 +8,7 @@ import ar.gcba.cactyt.recepcion.payloads.NewTipoDocumentoPayload;
 public class TipoDocumentoCreateHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
 		NewTipoDocumentoPayload value = getValue(NewTipoDocumentoPayload.class);
 		Model model = getModel();
     	Object[] errors = value.validate(model);

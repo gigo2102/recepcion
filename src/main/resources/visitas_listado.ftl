@@ -17,6 +17,7 @@
 		<th>Area</th>
 		<th>Motivo</th>
 		<th>Observacion</th>
+		<th>Estado</th>
 	</tr>
 	<#list model as unVisita>
 		<tr>

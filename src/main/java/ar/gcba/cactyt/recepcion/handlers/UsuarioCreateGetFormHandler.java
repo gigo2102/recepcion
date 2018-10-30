@@ -10,6 +10,7 @@ import ar.gcba.cactyt.recepcion.payloads.NewUsuarioPayload;
 public class UsuarioCreateGetFormHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	if (!hasRole("admin")) return redirect("/logout");
     	Model model = getModel();
     	List<Area> areasList = model.areasList(null);
     	NewUsuarioPayload viewModel = new NewUsuarioPayload(areasList);

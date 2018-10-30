@@ -11,6 +11,7 @@ public class MotivoDeleteHandler extends AbstractRequestHandler {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
     	model.motivoDelete(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/motivos");
     }
 }

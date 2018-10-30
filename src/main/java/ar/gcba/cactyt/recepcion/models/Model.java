@@ -76,7 +76,7 @@ public interface Model {
 
 	void TipoDocumentoDelete(UUID uuid);
 
-	List<Visita> visitasList(String searchTerm);
+	List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid);
 
 	Usuario usuariosGetByLogin(String usuario, String password);
 
@@ -89,6 +89,8 @@ public interface Model {
 	boolean personaExisteDocumento(String valordocumento);
 
 	void empleadosUpdater(Empleados empleado);
+
+	void visitaAtender(UUID uuid);
 
 
 }

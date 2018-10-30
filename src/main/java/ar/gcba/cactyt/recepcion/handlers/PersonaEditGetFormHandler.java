@@ -12,10 +12,10 @@ import ar.gcba.cactyt.recepcion.payloads.EditPersonaPayload;
 public class PersonaEditGetFormHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
+    	
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
     	Persona unPersona = model.personasGetById(uuid);
-
     	List<TipoDocumento> tipodocumentosList = model.tipodocumentosList(null);
     	EditPersonaPayload viewModel = new EditPersonaPayload(tipodocumentosList);
     	viewModel.setUuid(unPersona.getUuid());
@@ -25,8 +25,7 @@ public class PersonaEditGetFormHandler extends AbstractRequestHandler {
     	viewModel.setTelefono(unPersona.getTelefono());
     	viewModel.setValorDocumento(unPersona.getValorDocumento());
     	viewModel.setTipoDocumentoId(unPersona.getTipoDocumento().getUuid());
-    	
-		return view("personas_edit.ftl", viewModel);
+    	return view("personas_edit.ftl", viewModel);
     }
 
 

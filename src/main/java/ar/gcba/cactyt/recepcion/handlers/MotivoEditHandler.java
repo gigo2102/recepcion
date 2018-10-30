@@ -15,6 +15,7 @@ public class MotivoEditHandler extends AbstractRequestHandler {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	value.setUuid(uuid);
     	Model model = getModel();
+    	if (!hasRole("admin")) return redirect("/logout");
 		Object[] errors = value.validate(model);
     	if (errors.length > 0) {
 			return view("motivos_edit.ftl", value, errors);

@@ -81,6 +81,8 @@ public class RecepcionService
         //crear VISITA
         routes.get("/visitas/create_form", VisitaCreateGetFormHandler.class);
         routes.post("/visitas", VisitaCreateHandler.class);
+        routes.get("/visitas/ws_pendientes", VisitasPendientesWsHandler.class);
+        routes.get("/visitas/atender", VisitasPendientesAtenderHandler.class);
         
        
         //listado

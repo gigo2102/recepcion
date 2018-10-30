@@ -54,7 +54,7 @@ public class Usuario {
 	}
 
 	public boolean getEsAdmin() {
-		return true;//esAdmin;
+		return esAdmin;
 	}
 
 	public void setEsAdmin(boolean esAdmin) {

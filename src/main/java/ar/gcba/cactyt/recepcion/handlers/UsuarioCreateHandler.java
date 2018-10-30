@@ -11,6 +11,7 @@ public class UsuarioCreateHandler extends AbstractRequestHandler {
     @Override
     public Answer process() {
 		NewUsuarioPayload value = getValue(NewUsuarioPayload.class);
+		if (!hasRole("admin")) return redirect("/logout");
 		Model model = getModel();
     	Object[] errors = value.validate(model);
     	if (errors.length > 0) {
@@ -21,6 +22,7 @@ public class UsuarioCreateHandler extends AbstractRequestHandler {
     	usuario.setNombre(value.getNombre());
     	usuario.setCorreo(value.getCorreo());
     	usuario.setPass(value.getPass());
+    	usuario.setEsAdmin(value.getEsAdmin());
     	Area area = model.areasGetById(value.getAreaid());
     	usuario.setArea(area);
 		model.usuariosCreate(usuario);
