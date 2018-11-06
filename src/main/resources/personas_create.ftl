@@ -34,15 +34,13 @@
 		<label for="telefono">Telefono</label>
         <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingresar Telefono..." value="${model.telefono!''}" />
 	</div>
-	
 		<div class="form-group">
 		<label for="correo">Correo</label>
         <input type="text" class="form-control" id="correo" name="correo" placeholder="Ingresar Correo..." value="${model.correo!''}" />
 	</div>
 	
-	
- 
-	<input class="btn btn-primary" type="submit" value="Crear" id="btnCrear"/>
+
+<input class="btn btn-primary" type="submit" value="Crear" id="btnCrear"/>
 	<a class="btn btn-default" href="/personas">Volver</a>
 </form>
 
@@ -54,23 +52,17 @@ $(function() {
 		if(correo != "") {
 			var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 			if(!regex.test(correo)) {
-				alert("Usar arroba.");
+				alert("Usar arroba en el correo.");
 				return false;
 			}
-			/* validar telefono  */
-			var telefono = document.querySelector("#telefono").value;
-    if (!/^([0-9])*$/.test(telefono))
-      alert("El valor " debe contener solo numeros");
-  }
-			
-			
 			return true;
 		}
-	
 
 		return true;
 	});
 });
 </script>
+
+
 
 

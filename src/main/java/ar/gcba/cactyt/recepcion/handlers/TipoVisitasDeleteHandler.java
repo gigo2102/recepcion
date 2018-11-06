@@ -10,8 +10,12 @@ public class TipoVisitasDeleteHandler extends AbstractRequestHandler {
     public Answer process() {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
+    	try {
     	model.tipovisitasDelete(uuid);
     	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/tipovisitas");
-    }
-}
+    	} catch (RuntimeException e) {
+    		return view("errors.ftl", e.getMessage());    		
+    	}
+    	}}
+

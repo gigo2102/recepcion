@@ -12,7 +12,7 @@ public class TipoVisitaCreateHandler extends AbstractRequestHandler {
 		Model model = getModel();
     	Object[] errors = value.validate(model);
     	if (errors.length > 0) {
-			return view("tiposvisita_create.ftl", value, errors);
+			return view("tipovisita_create.ftl", value, errors);
 		}
 		model.tipovisitasCreate(value);
 		if (!hasRole("admin")) return redirect("/logout");

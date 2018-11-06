@@ -31,13 +31,12 @@ public class VisitasSearchKendoFiltersHandler extends AbstractRequestHandler {
 		+ " inner join motivos on motivos.uuid = visitas.motivoid"
 		+ " inner join personas on personas.uuid = visitas.personaid"
 		+ " inner join tipovisitas on tipovisitas.uuid = visitas.tipovisitaid"
-		+ " where areas.uuid='" + areaUuid.toString() + "'"
+		+ " where areas.uuid='" + areaUuid.toString() + "'" 
 		+ " order by visitas.fechaCreacion desc";
         return json(model.kendoSearch(VisitaSearchDto.class, query, getUrlParams()));
     }
     
-
-    public class VisitaSearchDto {
+       public class VisitaSearchDto {
 		private String uuid;
     	private String observaciones;
     	private String areaNombre;

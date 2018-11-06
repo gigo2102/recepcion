@@ -11,7 +11,11 @@ public class TipoDocumentoDeleteHandler extends AbstractRequestHandler {
     	if (!hasRole("admin")) return redirect("/logout");
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
-    	model.TipoDocumentoDelete(uuid);
-        return redirect("/tipodocumentos");
+    	try {
+    		model.TipoDocumentoDelete(uuid);
+        	return redirect("/tipodocumentos");
+    	} catch (RuntimeException e) {
+        	return view("errors.ftl", e.getMessage());    		
+    	}
     }
 }

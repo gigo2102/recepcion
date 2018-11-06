@@ -430,12 +430,21 @@ public class Sql2oModel implements Model {
 	@Override
 	public void motivoDelete(UUID uuid) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("delete from motivos where uuid=:motivo_uuid")
-                    .addParameter("motivo_uuid", uuid)
-                    .executeUpdate();
-        }
+        	List<UUID> areasIds = conn
+            .createQuery("select uuid from areas where areaid=:area_uuid")
+            .addParameter("area_uuid", uuid)
+            .executeAndFetch(UUID.class);
+            if (!areasIds.isEmpty()) {
+            	throw new RuntimeException("No se puede borrar el motivo porque es usado por " + areasIds.size() + " areas");
+            }
+            
+    	conn.createQuery("delete from motivos where uuid=:motivo_uuid")
+        .addParameter("motivo_uuid", uuid)
+        .executeUpdate();
 	}
-
+	}
+	
+				
 	@Override
 	public void areaDelete(UUID uuid) {
         try (Connection conn = sql2o.open()) {
@@ -466,7 +475,15 @@ public class Sql2oModel implements Model {
 	@Override
 	public void TipoDocumentoDelete(UUID uuid) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("delete from tipodocumentos where uuid=:tipodocumento_uuid")
+        	List<UUID> personasIds = conn
+    			.createQuery("select uuid from personas where tipodocumentoid=:tipodocumento_uuid")
+            	.addParameter("tipodocumento_uuid", uuid)
+            	.executeAndFetch(UUID.class);
+            if (!personasIds.isEmpty()) {
+            	throw new RuntimeException("No se puede borrar el tipo de documento porque es usado por " + personasIds.size() + " personas");
+            }
+        	
+        	conn.createQuery("delete from tipodocumentos where uuid=:tipodocumento_uuid")
                     .addParameter("tipodocumento_uuid", uuid)
                     .executeUpdate();
         }
@@ -475,11 +492,21 @@ public class Sql2oModel implements Model {
 	@Override
 	public void tipovisitasDelete(UUID uuid) {
         try (Connection conn = sql2o.open()) {
+        	List<UUID> visitasIds = conn
+              .createQuery("select uuid from visitas where visitaid=:visita_uuid")
+              .addParameter("visita_uuid", uuid)
+              .executeAndFetch(UUID.class);
+            if (!visitasIds.isEmpty()) {
+              	throw new RuntimeException("No se puede borrar el tipo de visita porque es usado por " + visitasIds.size() + " areas");
+            }
             conn.createQuery("delete from tipovisitas where uuid=:tipovisitas_uuid")
                     .addParameter("tipovisitas_uuid", uuid)
                     .executeUpdate();
         }
 	}
+	
+	
+        
 	
 	
 	@Override

@@ -10,8 +10,12 @@ public class MotivoDeleteHandler extends AbstractRequestHandler {
     public Answer process() {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
+    	try {
     	model.motivoDelete(uuid);
     	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/motivos");
-    }
-}
+    
+    } catch (RuntimeException e) {
+    	return view("errors.ftl", e.getMessage());    		
+	}
+    }}

@@ -41,6 +41,10 @@ public class NewVisitaPayload extends Visita implements Validable {
     		errors.add("Complete el area");
     	}
     	
+    	if(getPersonaId() == null) {
+    		errors.add("Complete la persona");
+    	}
+    	
     	return errors.toArray();
     }
 		

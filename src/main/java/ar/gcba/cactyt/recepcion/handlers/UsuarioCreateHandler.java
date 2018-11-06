@@ -1,10 +1,15 @@
 package ar.gcba.cactyt.recepcion.handlers;
 
+import java.util.List;
+
 import ar.gcba.cactyt.common.AbstractRequestHandler;
 import ar.gcba.cactyt.common.Answer;
 import ar.gcba.cactyt.recepcion.models.Area;
 import ar.gcba.cactyt.recepcion.models.Model;
+import ar.gcba.cactyt.recepcion.models.Motivo;
+import ar.gcba.cactyt.recepcion.models.TipoVisita;
 import ar.gcba.cactyt.recepcion.models.Usuario;
+import ar.gcba.cactyt.recepcion.models.Visita;
 import ar.gcba.cactyt.recepcion.payloads.NewUsuarioPayload;
 
 public class UsuarioCreateHandler extends AbstractRequestHandler {
@@ -30,3 +35,5 @@ public class UsuarioCreateHandler extends AbstractRequestHandler {
 		return redirect("/usuarios");
     }
 }
+
+

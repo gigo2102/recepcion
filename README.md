@@ -57,4 +57,26 @@ sentry
 maven
 
 
+INSTALACION
+===========
 
+1) Instalar
+
+	* postgres 9.6 o 10
+	* docker toolbox for windows (verificar funcionamiento de docker y docker-compose)
+
+2) agregar en pg_hba.conf al final de todo
+
+	# acceso remoto
+	host    all             all              0.0.0.0/0              md5
+	host    all             all              ::/0                   md5
+
+3) reiniciar pg server para que lea las nuevas configuraciones
+
+4) agregar excepcion de firewall para puerto 5432 en el server windows para que sea accedido desde docker toolbox
+
+5) en la carpeta de la aplicacion correr
+
+	docker-compose up -d --build --force-recreate recepcion_web
+	
+6) ingresar a http://192.168.99.100:8001/login

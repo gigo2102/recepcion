@@ -12,6 +12,7 @@ public class Usuario {
     private String pass;
     private Area area;
     private boolean esAdmin;
+    private boolean esRecepcionista;
     
 	public UUID getUuid() {
 		return uuid;
@@ -59,5 +60,13 @@ public class Usuario {
 
 	public void setEsAdmin(boolean esAdmin) {
 		this.esAdmin = esAdmin;
+	}
+
+	public boolean isEsRecepcionista() {
+		return esRecepcionista;
+	}
+
+	public void setEsRecepcionista(boolean esRecepcionista) {
+		this.esRecepcionista = esRecepcionista;
 	}
 }

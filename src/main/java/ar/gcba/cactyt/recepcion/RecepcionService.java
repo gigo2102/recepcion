@@ -7,7 +7,6 @@ import ar.gcba.cactyt.common.RouteConfigurator;
 import ar.gcba.cactyt.recepcion.handlers.*;
 import ar.gcba.cactyt.recepcion.models.Model;
 import ar.gcba.cactyt.recepcion.models.Sql2oModel;
-import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 
 import org.sql2o.Sql2o;
@@ -17,6 +16,10 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.logging.Logger;
 import static spark.Spark.get;
@@ -60,7 +63,15 @@ public class RecepcionService
         //configuramos el motor de plantillas/vistas html
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
         Configuration freeMarkerConfiguration = new Configuration();
-        freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(RecepcionService.class, "/"));
+        //freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(RecepcionService.class, "/"));
+        try {
+			String dirname = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/main/resources";
+			File dir = new File(dirname);
+			freeMarkerConfiguration.setDirectoryForTemplateLoading(dir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
         
         //configuramos la ruta para chequeo de salud
@@ -77,6 +88,7 @@ public class RecepcionService
         routes.get("/login", LoginGetFormHandler.class, false);
         routes.post("/login", LoginHandler.class, false);
         routes.get("/logout", LogoutHandler.class, false);
+        routes.get("/errors", LogoutHandler.class, false);
         
         //crear VISITA
         routes.get("/visitas/create_form", VisitaCreateGetFormHandler.class);
