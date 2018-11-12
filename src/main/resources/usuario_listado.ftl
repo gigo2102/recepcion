@@ -13,7 +13,7 @@
         	<td> ${unUsuario.nombre}</td>
         	<td> ${unUsuario.correo}</td>
 		   <td> ${unUsuario.area.nombre}</td> 
-		   <td> ${unUsuario.esAdmin?string("Admin", "")}</td> 
+		   <td> ${unUsuario.esAdmin?string("Admin", "")} ${unUsuario.esRecepcionista?string("Recepcionista", "")}</td>
         	
 	        <td> 
 	        <a class="info" " href="/usuarios/${unUsuario.uuid}/edit_form">Editar</a>

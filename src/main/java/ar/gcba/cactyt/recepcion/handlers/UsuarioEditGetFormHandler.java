@@ -24,6 +24,8 @@ public class UsuarioEditGetFormHandler extends AbstractRequestHandler {
     	viewModel.setCorreo(elUsuario.getCorreo());
     	viewModel.setPass(elUsuario.getPass());
     	viewModel.setAreaId(elUsuario.getArea().getUuid());
+    	viewModel.setEsAdmin(elUsuario.getEsAdmin());
+    	viewModel.setEsRecepcionista(elUsuario.getEsRecepcionista());
     	
 		return view("usuarios_edit.ftl", viewModel);
     }

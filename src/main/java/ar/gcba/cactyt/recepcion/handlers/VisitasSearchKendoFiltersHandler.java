@@ -23,6 +23,10 @@ public class VisitasSearchKendoFiltersHandler extends AbstractRequestHandler {
         Area area = usuario.getArea();
         UUID areaUuid = area.getUuid();
         
+        String whereCondicion = usuario.getEsAdmin() || usuario.getEsRecepcionista()
+        		? ""
+        		: (" where areas.uuid='" + areaUuid.toString() + "'");
+        
 	    String query = "select visitas.uuid, visitas.observaciones, areas.nombre as areaNombre, motivos.nombre as motivoNombre "
 		+ " , personas.nombre as personaNombre, personas.apellido as personaApellido, personas.valorDocumento as personaValorDocumento"
 		+ " , tipovisitas.nombre as tipoVisitaNombre, visitas.fueAtendido "
@@ -31,7 +35,7 @@ public class VisitasSearchKendoFiltersHandler extends AbstractRequestHandler {
 		+ " inner join motivos on motivos.uuid = visitas.motivoid"
 		+ " inner join personas on personas.uuid = visitas.personaid"
 		+ " inner join tipovisitas on tipovisitas.uuid = visitas.tipovisitaid"
-		+ " where areas.uuid='" + areaUuid.toString() + "'" 
+		+ whereCondicion
 		+ " order by visitas.fechaCreacion desc";
         return json(model.kendoSearch(VisitaSearchDto.class, query, getUrlParams()));
     }

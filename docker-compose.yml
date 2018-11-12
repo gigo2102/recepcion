@@ -4,6 +4,6 @@ services:
     build: .
     container_name: recepcion_web
     restart: unless-stopped
-    entrypoint: java -jar recepcion.jar --db-host 192.168.99.1
+    entrypoint: java -jar recepcion.jar --db-host 192.168.99.1 --database recepcion
     ports:
       - "8001:4567"

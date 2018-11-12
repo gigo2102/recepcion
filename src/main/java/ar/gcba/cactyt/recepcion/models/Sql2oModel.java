@@ -65,13 +65,14 @@ public class Sql2oModel implements Model {
     @Override
     public void updateUsuario(Usuario usuario) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("update usuarios set nombre=:nombre,correo=:correo , pass=:pass, areaid=:areaid, esAdmin=:esAdmin  where uuid=:usuario_uuid")
+            conn.createQuery("update usuarios set nombre=:nombre,correo=:correo , pass=:pass, areaid=:areaid, esAdmin=:esAdmin , esRecepcionista=:esRecepcionista  where uuid=:usuario_uuid")
                     .addParameter("usuario_uuid", usuario.getUuid())
                     .addParameter("nombre", usuario.getNombre())
                     .addParameter("correo", usuario.getCorreo())
                     .addParameter("pass", usuario.getPass())
                     .addParameter("areaid", usuario.getArea().getUuid())
                     .addParameter("esAdmin", usuario.getEsAdmin())
+                    .addParameter("esRecepcionista", usuario.getEsRecepcionista())
                     .executeUpdate();
         }
     }
@@ -110,7 +111,7 @@ public class Sql2oModel implements Model {
 	@Override
 	public List<Usuario> usuariosList() {
 	       try (Connection conn = sql2o.open()) {
-	        	List<Usuario> usuarios = conn.createQuery("select uuid,nombre,correo,pass, esAdmin  from usuarios")
+	        	List<Usuario> usuarios = conn.createQuery("select uuid,nombre,correo,pass, esAdmin, esRecepcionista  from usuarios")
 	                    .executeAndFetch(Usuario.class);
 	        	for(Usuario usuario : usuarios) {
 	        		mapAreaForUsuario(usuario, conn);
@@ -148,10 +149,10 @@ public class Sql2oModel implements Model {
 	@Override
 	public List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid) {
         try (Connection conn = sql2o.open()) {
-        	List<Visita> visitas = conn.createQuery("select uuid,observaciones from visitas where (:fueAtendido is null or fueAtendido=:fueAtendido) and (:searchTerm is null or :searchTerm is not null) and (:areaUuid is null or areaid=:areaUuid)")
+        	List<Visita> visitas = conn.createQuery("select uuid,observaciones from visitas where (:fueAtendido is null or fueAtendido=:fueAtendido) and (:searchTerm is null or :searchTerm is not null) and (:areaUuid='' or cast(areaid as varchar(100))=:areaUuid)")
                 	.addParameter("searchTerm", searchTerm)
                 	.addParameter("fueAtendido", fueAtendido)
-                	.addParameter("areaUuid", areaUuid)
+                	.addParameter("areaUuid", areaUuid == null ? "" : areaUuid.toString())
             		.executeAndFetch(Visita.class);
         	for(Visita visita : visitas) {
         		mapPersonaForVisita(visita, conn);
@@ -258,12 +259,13 @@ public class Sql2oModel implements Model {
         try (Connection conn = sql2o.open()) {
             UUID uuid = uuidGenerator.generate();
             usuario.setUuid(uuid);
-            conn.createQuery("insert into usuarios(uuid, nombre, correo , pass, areaid,esAdmin) VALUES (:uuid, :nombre ,:correo , :pass, :areaid , :esAdmin)")
+            conn.createQuery("insert into usuarios(uuid, nombre, correo , pass, areaid,esAdmin,esRecepcionista) VALUES (:uuid, :nombre ,:correo , :pass, :areaid , :esAdmin, :esRecepcionista)")
                     .addParameter("uuid", uuid)
                     .addParameter("nombre", usuario.getNombre())
                     .addParameter("correo", usuario.getCorreo())
                     .addParameter("pass", usuario.getPass())
                     .addParameter("esAdmin", usuario.getEsAdmin())
+                    .addParameter("esRecepcionista" , usuario.getEsRecepcionista())
                     .addParameter("areaid", usuario.getArea().getUuid())
                     .executeUpdate();
         }
@@ -586,7 +588,7 @@ public class Sql2oModel implements Model {
 	@Override
 	public Usuario usuariosGetById(UUID uuid) {
         try (Connection conn = sql2o.open()) {
-            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass , esAdmin from usuarios where uuid=:usuario_uuid")
+            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass , esAdmin, esRecepcionista from usuarios where uuid=:usuario_uuid")
                     .addParameter("usuario_uuid", uuid)
                     .executeAndFetch(Usuario.class);
             if (usuarios.size() == 1) {
@@ -629,7 +631,7 @@ public class Sql2oModel implements Model {
 	@Override
 	public Usuario usuariosGetByLogin(String nombre, String password) {
         try (Connection conn = sql2o.open()) {
-            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass, esAdmin from usuarios where nombre=:usuario_nombre and pass=:usuario_password")
+            List<Usuario> usuarios = conn.createQuery("select uuid,nombre, correo, pass, esAdmin, esRecepcionista from usuarios where nombre=:usuario_nombre and pass=:usuario_password")
                     .addParameter("usuario_nombre", nombre)
                     .addParameter("usuario_password", password)
                     .executeAndFetch(Usuario.class);

@@ -14,7 +14,7 @@ public class VisitaPendienteSearchKendoHandler extends AbstractRequestHandler {
 	    String query = "select usuarios.uuid,areas.nombre as areaNombre , motivo.descripcion as Motivo "
 		+ " , tipovisitas.nombre as tipoVisitaNombre"
 		+ " from visitas"
-//		+ " inner join usuarios on usuarios.uuid = visitas.usuarioid"
+		+ " inner join usuarios on usuarios.uuid = visitas.usuarioid"
 		+ " inner join areas on areas.uuid = visitas.areaid"
 		+ " inner join motivos on motivos.uuid = visitas.motivoid"
 		+ " inner join tipovisitas on tipovisitas.uuid = visitas.tipovisitaid";

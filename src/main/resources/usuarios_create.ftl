@@ -27,13 +27,19 @@
     </div>
     
      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label>
-            <input type="checkbox"> Es administrador 
-            </label>
-          </div>
-        </div>
+        <label>Es Administrador</label>
+        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="esAdmin">
+            <option value="false">No</option>
+            <option value="true">Si</option>
+        </select>
+      </div>
+    
+     <div class="form-group">
+        <label>Es Recepcionista</label>
+        <select class="form-control chosen-select" data-placeholder="Elegí una opción" name="esRecepcionista">
+            <option value="false">No</option>
+            <option value="true">Si</option>
+        </select>
       </div>
     
 	<input class="btn btn-primary" type="submit" value="Crear" id="btnCrear" />

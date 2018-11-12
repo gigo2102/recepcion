@@ -23,8 +23,10 @@ public class UsuarioEditHandler extends AbstractRequestHandler {
     	
     	Usuario usuario = model.usuariosGetById(uuid);
     	usuario.setCorreo(value.getCorreo());
-    	usuario.setPass(value.getNombre());
-    	usuario.setNombre(value.getPass());
+    	usuario.setPass(value.getPass());
+    	usuario.setNombre(value.getNombre());
+    	usuario.setEsAdmin(value.getEsAdmin());
+    	usuario.setEsRecepcionista(value.getEsRecepcionista());
     	Area area = model.areasGetById(value.getAreaId());
     	usuario.setArea(area);
     	model.updateUsuario(usuario);

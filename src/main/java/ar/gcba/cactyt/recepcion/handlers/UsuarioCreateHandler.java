@@ -20,6 +20,8 @@ public class UsuarioCreateHandler extends AbstractRequestHandler {
 		Model model = getModel();
     	Object[] errors = value.validate(model);
     	if (errors.length > 0) {
+        	List<Area> areasList = model.areasList(null);
+        	value.setAreasList(areasList);
 			return view("usuarios_create.ftl", value, errors);
 		}
     	
@@ -28,6 +30,7 @@ public class UsuarioCreateHandler extends AbstractRequestHandler {
     	usuario.setCorreo(value.getCorreo());
     	usuario.setPass(value.getPass());
     	usuario.setEsAdmin(value.getEsAdmin());
+    	usuario.setEsRecepcionista(value.getEsRecepcionista());
     	Area area = model.areasGetById(value.getAreaid());
     	usuario.setArea(area);
 		model.usuariosCreate(usuario);

@@ -62,7 +62,7 @@ public class Usuario {
 		this.esAdmin = esAdmin;
 	}
 
-	public boolean isEsRecepcionista() {
+	public boolean getEsRecepcionista() {
 		return esRecepcionista;
 	}
 
