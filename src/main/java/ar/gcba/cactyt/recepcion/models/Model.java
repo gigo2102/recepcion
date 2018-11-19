@@ -76,7 +76,7 @@ public interface Model {
 
 	void TipoDocumentoDelete(UUID uuid);
 
-	List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid);
+	List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid, Boolean ordenarPorAtencionDesc);
 
 	Usuario usuariosGetByLogin(String usuario, String password);
 

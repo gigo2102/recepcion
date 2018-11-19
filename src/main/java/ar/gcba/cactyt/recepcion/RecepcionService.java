@@ -202,9 +202,14 @@ public class RecepcionService
         
         //configuramos las rutas de MOTIVOS
         //listado
-       
+        
         routes.get("/personas/empleados/importacion", EmpleadosImportacionHandler.class);
         routes.post("/personas/empleados/importacion/upload", EmpleadosImportacionUploadHandler.class); //AreaUpdatePayload
+
+        //televisor
+        
+        routes.get("/televisor/pantalla", TelevisorPantallaHandler.class, false);
+        routes.get("/televisor/ws_pantalla", TelevisorPantallaWsHandler.class, false);
 
         
         

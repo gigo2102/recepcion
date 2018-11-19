@@ -20,7 +20,7 @@ public class VisitasPendientesWsHandler extends AbstractRequestHandler {
         Usuario usuario = model.usuariosGetById(usuarioUuid);
         Area area = usuario.getArea();
         UUID areaUuid = usuario.getEsAdmin() || usuario.getEsRecepcionista() ? null : area.getUuid();
-        List<Visita> visitasPendientesDelAreaDelUsuario = model.visitasList(null, false, areaUuid);
+        List<Visita> visitasPendientesDelAreaDelUsuario = model.visitasList(null, false, areaUuid, false);
         return json(visitasPendientesDelAreaDelUsuario);
     }
 }
