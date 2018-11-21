@@ -11,7 +11,14 @@ public class UsuariosDeleteHandler extends AbstractRequestHandler {
     	if (!hasRole("admin")) return redirect("/logout");
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
+    	try {
     	model.usuarioDelete(uuid);
+    	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/usuarios");
+    	} catch (RuntimeException e) {
+        	return view("errors.ftl", e.getMessage());    		
+    	}
     }
 }
+
+

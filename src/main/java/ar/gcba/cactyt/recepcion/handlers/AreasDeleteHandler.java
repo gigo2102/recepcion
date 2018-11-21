@@ -10,8 +10,14 @@ public class AreasDeleteHandler extends AbstractRequestHandler {
     public Answer process() {
     	UUID uuid = UUID.fromString(getUrlParams().get(":uuid"));
     	Model model = getModel();
+    	try {
     	model.areaDelete(uuid);
     	if (!hasRole("admin")) return redirect("/logout");
         return redirect("/areas");
-    }
-}
+    	} catch (RuntimeException e) {
+        	return view("errors.ftl", e.getMessage());    		
+    	}
+        
+    }}
+
+

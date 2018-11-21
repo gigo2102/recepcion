@@ -89,6 +89,7 @@ public class RecepcionService
         routes.post("/login", LoginHandler.class, false);
         routes.get("/logout", LogoutHandler.class, false);
         routes.get("/errors", LogoutHandler.class, false);
+      
         
         //crear VISITA
         routes.get("/visitas/create_form", VisitaCreateGetFormHandler.class);

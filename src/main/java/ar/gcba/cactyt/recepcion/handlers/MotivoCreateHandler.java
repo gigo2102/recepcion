@@ -1,5 +1,7 @@
 package ar.gcba.cactyt.recepcion.handlers;
 
+import java.util.List;
+
 import ar.gcba.cactyt.common.AbstractRequestHandler;
 import ar.gcba.cactyt.common.Answer;
 import ar.gcba.cactyt.recepcion.models.Area;
@@ -15,6 +17,8 @@ public class MotivoCreateHandler extends AbstractRequestHandler {
     	Model model = getModel();
     	Object[] errors = value.validate(model);
     	if (errors.length > 0) {
+    		List<Area> areasList = model.areasList(null);
+    		value.setAreasList(areasList);
 			return view("motivos_create.ftl", value, errors);
 		}
     	
@@ -27,3 +31,5 @@ public class MotivoCreateHandler extends AbstractRequestHandler {
 		return redirect("/motivos");
     }
 }
+
+
