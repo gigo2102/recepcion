@@ -147,9 +147,13 @@ public class Sql2oModel implements Model {
 	}
 	
 	@Override
-	public List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid) {
+	public List<Visita> visitasList(String searchTerm, Boolean fueAtendido, UUID areaUuid, Boolean ordenarPorAtencionDesc) {
         try (Connection conn = sql2o.open()) {
-        	List<Visita> visitas = conn.createQuery("select uuid,observaciones from visitas where (:fueAtendido is null or fueAtendido=:fueAtendido) and (:searchTerm is null or :searchTerm is not null) and (:areaUuid='' or cast(areaid as varchar(100))=:areaUuid)")
+        	String q = "select uuid,observaciones from visitas where (:fueAtendido is null or fueAtendido=:fueAtendido) and (:searchTerm is null or :searchTerm is not null) and (:areaUuid='' or cast(areaid as varchar(100))=:areaUuid)";
+        	if (ordenarPorAtencionDesc == true) {
+        		q += " order by fechaAtencion desc limit 10";
+        	}
+        	List<Visita> visitas = conn.createQuery(q)
                 	.addParameter("searchTerm", searchTerm)
                 	.addParameter("fueAtendido", fueAtendido)
                 	.addParameter("areaUuid", areaUuid == null ? "" : areaUuid.toString())
@@ -683,7 +687,7 @@ public class Sql2oModel implements Model {
 	@Override
 	public void visitaAtender(UUID uuid) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("update visitas set fueAtendido=true where uuid=:uuid")
+            conn.createQuery("update visitas set fueAtendido=true, fechaAtencion=now() where uuid=:uuid")
                     .addParameter("uuid", uuid)
                     .executeUpdate();
         }
