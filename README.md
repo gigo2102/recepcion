@@ -124,7 +124,7 @@ INSTALACION LINUX DEBIAN 9
 	sudo su
 	git clone https://github.com/gigo2102/recepcion.git
 	cd recepcion
-	mv ejemplo-service-linux.sh /etc/init.d/__MyService__
+	cp ejemplo-service-linux.sh /etc/init.d/__MyService__
 	vim /etc/init.d/__MyService__
 	cat /etc/init.d/__MyService__
 		SERVICE_NAME=recepcion_v1
