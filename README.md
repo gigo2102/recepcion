@@ -133,7 +133,8 @@ INSTALACION LINUX DEBIAN 9
 	echo $MyServiceArgs
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
 	cat /etc/init.d/$MyService
-	ln -sf releases/release-v1.0 /opt/recepcion/app
+	ln -sf /home/admin/recepcion/releases/release-v1.0 /opt/recepcion
+	mv /opt/recepcion/release-v1.0 /opt/recepcion/app
 	ls /opt/$MyService
 	chmod +x /etc/init.d/$MyService
 	systemctl daemon-reload

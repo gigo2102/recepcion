@@ -1,2 +1,2 @@
 export MyService=recepcion
-export MyServiceArgs=--database recepcion
+export MyServiceArgs="--database recepcion"
