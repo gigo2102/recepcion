@@ -1,10 +1,11 @@
 #!/bin/sh
 . /opt/recepcion/env-file
+
 SERVICE_NAME=$MyService
-PATH_TO_JAR_FOLDER=$MyServiceFolder
-JAR_ARGUMENTS=
+PATH_TO_JAR_FOLDER=/opt/$MyService/
+JAR_ARGUMENTS=$MyServiceArgs
 PID_PATH_NAME=/tmp/$SERVICE_NAME-pid
-PATH_TO_LOGS=/logs/$SERVICE_NAME.log
+PATH_TO_LOGS=/opt/$MyService/$SERVICE_NAME.log
 case $1 in
     start)
         echo "Starting $SERVICE_NAME ..."
