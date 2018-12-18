@@ -122,11 +122,11 @@ INSTALACION LINUX DEBIAN 9
 4) Instalar el sistema
 
 	sudo su
+	git clone https://github.com/gigo2102/recepcion.git
+	cd recepcion
 	export $MyService=recepcion
 	export $MyServiceVersion=release-v1.0
 	mkdir /opt/$MyService
-	git clone https://github.com/gigo2102/recepcion.git
-	cd recepcion
 	git pull
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
 	ln -sf /home/admin/recepcion/releases/$MyServiceVersion /opt/$MyService
@@ -137,3 +137,6 @@ INSTALACION LINUX DEBIAN 9
 	service $MyService start
 	service $MyService status
 	tail -f /opt/$MyService/$MyService.log
+
+
+	
