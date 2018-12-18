@@ -9,7 +9,7 @@ case $1 in
         echo "Starting $SERVICE_NAME ..."
         if [ ! -f $PID_PATH_NAME ]; then
             cd $PATH_TO_JAR_FOLDER
-            source env-file
+            . env-file
             nohup java -jar "$SERVICE_NAME.jar $JAR_ARGUMENTS"  >> $PATH_TO_LOGS 2>&1& echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else
@@ -36,7 +36,7 @@ case $1 in
             rm $PID_PATH_NAME
             echo "$SERVICE_NAME starting ..."
             cd $PATH_TO_JAR_FOLDER
-            source env-file
+            . env-file
             nohup java -jar "$SERVICE_NAME.jar $JAR_ARGUMENTS"  >> $PATH_TO_LOGS 2>&1& echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else
