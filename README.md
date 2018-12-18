@@ -124,12 +124,12 @@ INSTALACION LINUX DEBIAN 9
 	sudo su
 	git clone https://github.com/gigo2102/recepcion.git
 	cd recepcion
-	cp ejemplo-service-linux.sh /etc/init.d/__MyService__
-	vim /etc/init.d/__MyService__
-	cat /etc/init.d/__MyService__
-		SERVICE_NAME=recepcion_v1
-		PATH_TO_JAR=/home/admin/recepcion/releases/release-v1.0/recepcion-v1.0.jar --database recepcion
-		PID_PATH_NAME=/tmp/recepcion_v1-pid
+	export MyService=recepcion-v1.0
+	export MyServiceFolder=/home/admin/recepcion/releases/release-v1.0/
+	cp ejemplo-service-linux.sh /etc/init.d/$MyService
+	vim /etc/init.d/$MyService
+	cat /etc/init.d/$MyService
 	chmod +x /etc/init.d/__MyService__
+	mkdir /logs
 	update-rc.d __MyService__ defaults
 	service __MyService__ start
