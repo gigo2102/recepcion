@@ -2,7 +2,7 @@
 . /opt/recepcion/env-file
 
 SERVICE_NAME=$MyService
-PATH_TO_JAR_FOLDER=/opt/$MyService/
+PATH_TO_JAR_FOLDER=/opt/$MyService/app
 JAR_ARGUMENTS=$MyServiceArgs
 PID_PATH_NAME=/tmp/$SERVICE_NAME-pid
 PATH_TO_LOGS=/opt/$MyService/$SERVICE_NAME.log
