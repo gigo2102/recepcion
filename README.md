@@ -57,8 +57,8 @@ sentry
 maven
 
 
-INSTALACION
-===========
+INSTALACION WINDOWS
+===================
 
 1) Instalar
 
@@ -80,3 +80,41 @@ INSTALACION
 	docker-compose up -d --build --force-recreate recepcion_web
 	
 6) ingresar a http://192.168.99.100:8001/login
+
+
+INSTALACION LINUX DEBIAN 9
+==========================
+
+
+1) Instalar postgres
+
+	sudo su
+	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+	apt-get update
+	apt-get install postgresql
+	service postgresql status
+
+2) Crear usuario y base de datos
+
+	sudo su
+	su - postgres
+	createuser --interactive --pwprompt
+	createdb recepcion
+
+2) Ingresar a base de datos
+
+	sudo su
+	su - postgres
+	psql
+	\c recepcion;
+	\q
+
+3) Instalar el sistema
+
+	sudo su
+	apt-get install git
+	git clone https://github.com/gigo2102/recepcion.git
+	cd recepcion
+	mv ejemplo-service-linux.sh /etc/init.d/__MyService__
+	chmod +x /etc/init.d/__MyService__
+	service mytestserv start

@@ -1,9 +1,33 @@
 version: '3'
 services:
+
+  pg_db:
+    image: postgres:9.6.11
+    container_name: "pg_db"
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: sa
+      POSTGRES_DB: recepcion
+      POSTGRES_HOST: pg_db
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
   recepcion_web:
     build: .
     container_name: recepcion_web
     restart: unless-stopped
-    entrypoint: java -jar recepcion.jar --db-host 192.168.99.1 --database recepcion
+    entrypoint: java -jar recepcion.jar --db-host pg_db --database recepcion
     ports:
-      - "8001:4567"
+      - "80:4567"
+
+networks:
+  default:
+    external:
+      name: custom_network
+
+volumes:
+  dbdata:
+    external: true
