@@ -1,5 +1,5 @@
 #!/bin/sh
-export $MyService=recepcion
+MyService=recepcion
 
 SERVICE_NAME=$MyService
 PATH_TO_JAR_FOLDER=/opt/$MyService/app
