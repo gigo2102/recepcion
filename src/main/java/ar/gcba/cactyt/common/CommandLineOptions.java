@@ -17,10 +17,10 @@ public class CommandLineOptions {
     public String dbHost = "localhost";
 
     @Parameter(names = {"--db-username"})
-    public String dbUsername = "postgres";
+    public String dbUsername = "sa";
 
     @Parameter(names = {"--db-password"})
-    public String dbPassword = "root";
+    public String dbPassword = "password";
 
     @Parameter(names = {"--db-port"})
     public Integer dbPort = 5432;

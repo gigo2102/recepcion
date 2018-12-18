@@ -131,6 +131,7 @@ INSTALACION LINUX DEBIAN 9
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
 	chmod +x /etc/init.d/$MyService
 	cp -rf /home/admin/recepcion/releases/$MyServiceVersion /opt/$MyService
+	rm -rf /opt/$MyService/app
 	cp -rf /opt/$MyService/$MyServiceVersion /opt/$MyService/app
 	chmod +x /opt/$MyService/app/app.jar
 	systemctl daemon-reload
