@@ -122,20 +122,14 @@ INSTALACION LINUX DEBIAN 9
 4) Instalar el sistema
 
 	sudo su
-	mkdir /opt/recepcion
+	export $MyService=recepcion
+	mkdir /opt/$MyService
 	git clone https://github.com/gigo2102/recepcion.git
 	cd recepcion
 	git pull
-	cp env-file.md /opt/recepcion/env-file
-	cat /opt/recepcion/env-file
-	source /opt/recepcion/env-file
-	echo $MyService 
-	echo $MyServiceArgs
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
-	cat /etc/init.d/$MyService
-	ln -sf /home/admin/recepcion/releases/release-v1.0 /opt/recepcion
-	mv /opt/recepcion/release-v1.0 /opt/recepcion/app
-	ls /opt/$MyService
+	ln -sf /home/admin/recepcion/releases/release-v1.0 /opt/$MyService
+	mv /opt/$MyService/release-v1.0 /opt/$MyService/app
 	chmod +x /etc/init.d/$MyService
 	systemctl daemon-reload
 	update-rc.d $MyService defaults

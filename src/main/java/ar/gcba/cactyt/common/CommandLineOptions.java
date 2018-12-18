@@ -11,7 +11,7 @@ public class CommandLineOptions {
     public Integer servicePort = 4567;
 
     @Parameter(names = {"--database"})
-    public String database = "blog";
+    public String database = "recepcion";
 
     @Parameter(names = {"--db-host"})
     public String dbHost = "localhost";

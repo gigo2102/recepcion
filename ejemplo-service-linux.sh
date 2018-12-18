@@ -1,5 +1,5 @@
 #!/bin/sh
-. /opt/recepcion/env-file
+export $MyService=recepcion
 
 SERVICE_NAME=$MyService
 PATH_TO_JAR_FOLDER=/opt/$MyService/app
