@@ -128,6 +128,7 @@ INSTALACION LINUX DEBIAN 9
 	export MyServiceVersion="release-v1.0"
 	mkdir /opt/$MyService
 	git pull
+	service $MyService stop
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
 	chmod +x /etc/init.d/$MyService
 	cp -rf /home/admin/recepcion/releases/$MyServiceVersion /opt/$MyService
