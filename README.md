@@ -124,12 +124,16 @@ INSTALACION LINUX DEBIAN 9
 	sudo su
 	git clone https://github.com/gigo2102/recepcion.git
 	cd recepcion
-	export MyService=recepcion-v1.0
-	export MyServiceFolder=/home/admin/recepcion/releases/release-v1.0/
+	cp env-file.md env-file
+	vim env-file
+	source env-file
+	echo $MyService 
+	echo $MyServiceFolder 
 	cp ejemplo-service-linux.sh /etc/init.d/$MyService
-	vim /etc/init.d/$MyService
 	cat /etc/init.d/$MyService
-	chmod +x /etc/init.d/__MyService__
+	chmod +x /etc/init.d/$MyService
 	mkdir /logs
-	update-rc.d __MyService__ defaults
-	service __MyService__ start
+	update-rc.d $MyService defaults
+	service $MyService start
+	service $MyService status
+	tail -f /logs/$MyService.log
