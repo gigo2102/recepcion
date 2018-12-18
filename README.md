@@ -109,12 +109,27 @@ INSTALACION LINUX DEBIAN 9
 	\c recepcion;
 	\q
 
-3) Instalar el sistema
+3) Instalar git y java
 
 	sudo su
 	apt-get install git
+	apt-get install software-properties-common
+	add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"
+	apt-get update
+	apt-get install oracle-java8-installer
+	javac -version
+
+4) Instalar el sistema
+
+	sudo su
 	git clone https://github.com/gigo2102/recepcion.git
 	cd recepcion
 	mv ejemplo-service-linux.sh /etc/init.d/__MyService__
+	vim /etc/init.d/__MyService__
+	cat /etc/init.d/__MyService__
+		SERVICE_NAME=recepcion_v1
+		PATH_TO_JAR=/home/admin/recepcion/releases/release-v1.0/recepcion-v1.0.jar --database recepcion
+		PID_PATH_NAME=/tmp/recepcion_v1-pid
 	chmod +x /etc/init.d/__MyService__
-	service mytestserv start
+	update-rc.d __MyService__ defaults
+	service __MyService__ start
