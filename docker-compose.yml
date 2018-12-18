@@ -2,7 +2,7 @@ version: '2'
 services:
 
   pg_db:
-    image: postgres:9.6.11
+    image: postgres:10.6
     container_name: "pg_db"
     restart: unless-stopped
     ports:
