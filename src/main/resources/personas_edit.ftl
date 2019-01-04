@@ -27,7 +27,7 @@
 	
 	  <div class="form-group">
 		<label for="valorDocumento">Numero Documento</label>
-        <input type="text" class="form-control" id="valorDocumento" name="valorDocumento" placeholder="Ingresar numero de documento..." value="${model.valordocumento!''}" />
+        <input type="text" class="form-control" id="valorDocumento" name="valorDocumento" placeholder="Ingresar numero de documento..." value="${model.valorDocumento!''}" />
 	</div>
 	
 	 

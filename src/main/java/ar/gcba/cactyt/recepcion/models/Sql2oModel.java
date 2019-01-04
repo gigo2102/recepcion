@@ -81,7 +81,7 @@ public class Sql2oModel implements Model {
     public void updatePersona(Persona persona) {
         try (Connection conn = sql2o.open()) {
             conn.createQuery("update personas set nombre=:nombre,apellido=:apellido ,telefono=:telefono ,correo=:correo,valordocumento=:valordocumento, tipodocumentoid=:tipodocumentoid  where uuid=:persona_uuid")
-                    .addParameter("usuario_uuid", persona.getUuid())
+                    .addParameter("persona_uuid", persona.getUuid())
                     .addParameter("nombre", persona.getNombre())
                     .addParameter("correo", persona.getCorreo())
                     .addParameter("apellido", persona.getApellido())
@@ -151,7 +151,7 @@ public class Sql2oModel implements Model {
         try (Connection conn = sql2o.open()) {
         	String q = "select uuid,observaciones from visitas where (:fueAtendido is null or fueAtendido=:fueAtendido) and (:searchTerm is null or :searchTerm is not null) and (:areaUuid='' or cast(areaid as varchar(100))=:areaUuid)";
         	if (ordenarPorAtencionDesc == true) {
-        		q += " order by fechaAtencion desc limit 10";
+        		q += " and fechaAtencion is not null and extract(HOUR from now() - fechaAtencion)<2 order by fechaAtencion desc limit 10";
         	}
         	List<Visita> visitas = conn.createQuery(q)
                 	.addParameter("searchTerm", searchTerm)
