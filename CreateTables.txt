@@ -1,0 +1,158 @@
+
+CREATE TABLE public.areas
+(
+    uuid uuid NOT NULL,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT areas_pkey PRIMARY KEY (uuid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.areas
+    OWNER to postgres;
+	
+
+CREATE TABLE public.motivos
+(
+    uuid uuid NOT NULL,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    areaid uuid,
+    CONSTRAINT motivos_pkey PRIMARY KEY (uuid),
+    CONSTRAINT motivos_areaid_fkey FOREIGN KEY (areaid)
+        REFERENCES public.areas (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.motivos
+    OWNER to postgres;	
+
+CREATE TABLE public.tipodocumentos
+(
+    uuid uuid NOT NULL,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT tipodocumentos_pkey PRIMARY KEY (uuid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipodocumentos
+    OWNER to postgres;
+	
+	
+
+CREATE TABLE public.personas
+(
+    uuid uuid NOT NULL,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    apellido text COLLATE pg_catalog."default" NOT NULL,
+    correo text COLLATE pg_catalog."default" NOT NULL,
+    telefono text COLLATE pg_catalog."default",
+    valordocumento text COLLATE pg_catalog."default" NOT NULL,
+    tipodocumentoid uuid,
+    cuil text COLLATE pg_catalog."default" NOT NULL DEFAULT ''::text,
+    celular text COLLATE pg_catalog."default" NOT NULL DEFAULT ''::text,
+    ht text COLLATE pg_catalog."default" NOT NULL DEFAULT ''::text,
+    esempleado boolean NOT NULL DEFAULT false,
+    CONSTRAINT personas_pkey PRIMARY KEY (uuid),
+    CONSTRAINT personas_tipodocumentoid_fkey FOREIGN KEY (tipodocumentoid)
+        REFERENCES public.tipodocumentos (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.personas
+    OWNER to postgres;
+
+
+	
+
+
+CREATE TABLE public.tipovisitas
+(
+    uuid uuid NOT NULL,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT tipovisitas_pkey PRIMARY KEY (uuid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipovisitas
+    OWNER to postgres;
+
+	
+CREATE TABLE public.usuarios
+(
+    uuid uuid NOT NULL,
+    areaid uuid,
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    correo text COLLATE pg_catalog."default" NOT NULL,
+    pass text COLLATE pg_catalog."default" NOT NULL,
+    esadmin boolean NOT NULL DEFAULT false,
+    esrecepcionista boolean NOT NULL DEFAULT false,
+    CONSTRAINT usuarios_pkey PRIMARY KEY (uuid),
+    CONSTRAINT usuarios_areaid_fkey FOREIGN KEY (areaid)
+        REFERENCES public.areas (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuarios
+    OWNER to postgres;
+	
+
+CREATE TABLE public.visitas
+(
+    uuid uuid NOT NULL,
+    observaciones text COLLATE pg_catalog."default",
+    areaid uuid,
+    motivoid uuid,
+    personaid uuid,
+    tipovisitaid uuid,
+    fueatendido boolean DEFAULT false,
+    fechacreacion timestamp without time zone DEFAULT now(),
+    fechaatencion timestamp without time zone,
+    CONSTRAINT visitas_pkey PRIMARY KEY (uuid),
+    CONSTRAINT visitas_areaid_fkey FOREIGN KEY (areaid)
+        REFERENCES public.areas (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT visitas_motivoid_fkey FOREIGN KEY (motivoid)
+        REFERENCES public.motivos (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT visitas_personaid_fkey FOREIGN KEY (personaid)
+        REFERENCES public.personas (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT visitas_tipovisitaid_fkey FOREIGN KEY (tipovisitaid)
+        REFERENCES public.tipovisitas (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.visitas
+    OWNER to postgres;	
+	
